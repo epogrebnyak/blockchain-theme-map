@@ -1,7 +1,7 @@
 # Blockchain and Digital Assets Theme Map
 
 
-```json
+```yaml
 # Blockchain and Digital Assets Theme Map
 
 # ============================================
@@ -134,6 +134,6 @@ Compliance:
   - KYC and AML
   - Sanctions screening
   - Transfer restrictions
-```
   - Travel rule
   - Reporting and tax
+```
