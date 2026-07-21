@@ -1,0 +1,56 @@
+Past incidents:
+  _orientation: horizontal
+  items:
+    - CeFi failures:
+        - Mt. Gox (2014)
+        - FTX (2022)
+    		- Celsius (2022)
+		    - BlockFi (2022)
+    - DeFi exploits:
+        - The DAO (2016)
+		    - Poly Network (2021)
+		    - Ronin Bridge (2022)
+    		- Euler Finance (2023)
+    - Stablecoin collapses:
+	      - Terra/LUNA (2022)
+		    - USDC de-peg (2023)
+    - Speculative waves:
+        - ICO boom (2017-2018)
+        - NFT bubble (2021-2022)
+    - Regulatory actions:
+        - Binance (2023-2024)
+        - Tornado Cash (2022)
+
+Risk categories:
+  _orientation: table
+  items:
+    - Algorithmic risks:
+        - Flaws in consensus, bonding curves, or AMM formulas
+        - Example: Terra/LUNA
+
+    - Oracle manipulation:
+        - Price feed manipulation via flash loans or low-liquidity pools
+        - Example: Mango Markets (2022) exploited via manipulated oracle prices
+
+    - Bridge and interoperability risks:
+        - Cross-chain messages can be spoofed or replayed
+        - Example: Any bridge with a trusted validator set is a target
+
+    - Smart contract vulnerabilities:
+        - Re-entrancy, access control, logic bugs, upgradeability risks
+        - Example: The DAO (2016)
+
+    - Key management and custody risks:
+        - Private key loss, theft, or compromise
+        - Social engineering, phishing, sim-swapping, insider threats
+
+    - Governance risks:
+        - Token-based voting can be captured by whales or attackers
+
+    - Behavioral and social engineering:
+        - Honey-pots, rug pulls, fake websites, malicious browser extensions
+        - Pump-and-dump schemes, influencer manipulation
+
+    - Systemic contagion:
+        - Concentration of stablecoin reserves in a single bank (e.g., USDC/SVB)
+        - Interconnected leverage across DeFi protocols
