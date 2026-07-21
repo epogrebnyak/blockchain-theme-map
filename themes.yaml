@@ -1,24 +1,29 @@
 # Blockchain and Digital Assets Theme Map
 # Last revision: July 21, 2026 
 
-# ============================================
-# MINIMAL SET (6 critical categories)
-# ============================================
+# Note: do not replace and with &. Ther shoudl be no & in HTML  
 
-# 1. End user workflows
+
+# ============================================
+# USE CASES
+# ============================================
+#  This cards are horizontal and occupy full width
+
+# 1. What users need blockchain for?
+
 Use cases:
 
   Speculative:
-	- Trading BTC
+	- Spot trading (BTC, ETH, altcoins)
 	- Memecoins
 	- Prediction markets
 	
   Institutional finance (CeFi):
-    - Payments (Visa, Stripe)
-    - Exchange trading (Coinbase, Kraken)
+    - Payments
+    - Exchange trading
     - Custody and prime brokerage
-    - RWA issuance and trading (regulated venues)
-    - Derivatives (CME, regulated futures)
+    - RWA issuance and trading 
+    - Derivatives
 	
   Decentralised finance (DeFi):
     - Staking (Lido, Rocket Pool)
@@ -42,9 +47,10 @@ Use cases:
     - Gaming
     - Collectibles   
 
-  Emerging: 
-    - New securities  
-	- New workflows
+# ============================================
+# MINIMAL SET (5 critical categories)
+# ============================================
+#  This cards are horizontal and occupy full width
 
 # 2. On-chain activity flow
 
@@ -97,8 +103,7 @@ Foundations:
    - Peer-to-peer networking (node discovery and gossip protocols)
    - Consensus mechanisms (participants, rules and guarantees)
    - Execution environments (VMs and state transitions)
-   - API and user interface
-   - Account and wallet abstraction (ERC-4337, ERC-7579, paymasters)
+   - API and user interface, account and wallet abstraction 
 
 # ============================================
 # USER ACCESS (3 categories)
@@ -177,6 +182,7 @@ Compliance:
 #======================================================
 # RISK MANAGEMENT (2 categories)
 #======================================================
+#  This cards are horizontal and occupy full width
 
 # 14. Materialized risks
 Historical failures:
@@ -239,3 +245,4 @@ Recognised risks:
     - Interconnected leverage across DeFi protocols
 	
 # Add later: regulatory approaches
+# Emerging:  New securities   New workflows
