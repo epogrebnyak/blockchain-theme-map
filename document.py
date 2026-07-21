@@ -325,6 +325,39 @@ def get_items_by_group(card: Card) -> dict[str, list[Item]]:
     return groups
 
 
+def to_markdown(doc: Document) -> str:
+    lines: list[str] = []
+    lines.append(f"# {doc.title}")
+    lines.append("")
+    lines.append(f"Last revision: {doc.last_revision}  ")
+    lines.append(f"Source: <{doc.url}>")
+    lines.append("")
+
+    for section in doc.sections:
+        lines.append(f"## {section.title}")
+        lines.append("")
+        if section.subtitle:
+            lines.append(f"*{section.subtitle}*")
+            lines.append("")
+
+        for card in section.cards:
+            lines.append(f"### {card.title}")
+            lines.append("")
+            for item in card.items:
+                if item.is_header:
+                    lines.append(f"**{item.line}**")
+                    lines.append("")
+                else:
+                    suffix = f" — {item.comment}" if item.comment else ""
+                    lines.append(f"- {item.line}{suffix}")
+            lines.append("")
+
+    return "\n".join(lines)
+
+
 # Example usage
 if __name__ == "__main__":
-    print(document.model_dump_json(indent=2))
+    from pathlib import Path
+    output = Path(__file__).resolve().parent / "index.md"
+    output.write_text(to_markdown(document), encoding="utf-8")
+    print(f"Written to {output}")
