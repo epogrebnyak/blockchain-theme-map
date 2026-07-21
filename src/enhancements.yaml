@@ -1,0 +1,23 @@
+Interoperability:
+  _id: interoperability 
+  _orientation: vertical
+  items:
+    - Bridges
+    - Cross-chain messaging
+    - Light clients
+
+Oracles:
+  _orientation: vertical
+  items:
+    - Randomness
+    - Price feeds and event data (sports, weather and elections)
+    - Data aggregation and verification
+    - Cross-chain data
+
+Storage:
+  _orientation: vertical
+  items:
+    - On-chain storage (state and balances)
+    - Off-chain storage (IPFS, Arweave and Filecoin)
+    - Data availability layers (Celestia and EigenDA)
+    - Decentralized databases (Ceramic and OrbitDB)
