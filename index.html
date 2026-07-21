@@ -213,7 +213,6 @@
     .card.open .chevron { transform: rotate(180deg); }
 
     .card-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-    .card.open .card-body { max-height: 2000px; }
     .card-body-inner { padding: 0 16px 14px; }
 
     .subcategory { margin-top: 10px; }
@@ -398,16 +397,23 @@
 </footer>
 
 <script>
+  function setCardOpen(card, open) {
+    const body = card.querySelector('.card-body');
+    card.classList.toggle('open', open);
+    body.style.maxHeight = open ? `${body.scrollHeight}px` : '0';
+  }
+
   function toggleCard(header) {
-    header.closest('.card').classList.toggle('open');
+    const card = header.closest('.card');
+    setCardOpen(card, !card.classList.contains('open'));
   }
 
   document.getElementById('expand-all').addEventListener('click', () => {
-    document.querySelectorAll('.card:not([data-hidden="true"])').forEach(c => c.classList.add('open'));
+    document.querySelectorAll('.card:not([data-hidden="true"])').forEach(card => setCardOpen(card, true));
   });
 
   document.getElementById('collapse-all').addEventListener('click', () => {
-    document.querySelectorAll('.card').forEach(c => c.classList.remove('open'));
+    document.querySelectorAll('.card').forEach(card => setCardOpen(card, false));
   });
 
   const searchInput = document.getElementById('search');
@@ -424,7 +430,7 @@
 
       if (!query) {
         card.removeAttribute('data-hidden');
-        card.classList.remove('open');
+        setCardOpen(card, false);
         visibleCount++;
         return;
       }
@@ -442,7 +448,7 @@
 
       if (fullText.includes(query)) {
         card.removeAttribute('data-hidden');
-        card.classList.add('open');
+        setCardOpen(card, true);
         itemEls.forEach(li => {
           if (li.textContent.toLowerCase().includes(query)) {
             li.innerHTML = li.textContent.replace(new RegExp(`(${escapeRegex(query)})`, 'gi'), '<mark>$1</mark>');
@@ -451,7 +457,7 @@
         visibleCount++;
       } else {
         card.setAttribute('data-hidden', 'true');
-        card.classList.remove('open');
+        setCardOpen(card, false);
       }
     });
 
