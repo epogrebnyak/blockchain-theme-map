@@ -1,13 +1,17 @@
 # Blockchain and Digital Assets Theme Map
 # Last revision: July 21, 2026 
+# URL: https://github.com/epogrebnyak/blockchain-theme-map
 
-# Note: do not replace and with &. Ther shoudl be no & in HTML  
+# Conversion rules for createing HTML:
+# - Do not replace and with &. Ther should be no & in HTML  
+# - Add link to the repo https://github.com/epogrebnyak/blockchain-theme-map with github logo
+# - Do not use emojis
+# - Where mentioned card orientation: horizontal - these cards are horizontal and occupy full screen width
 
 
 # ============================================
-# USE CASES
+# LAYER 1. USE CASES
 # ============================================
-#  This cards are horizontal and occupy full width
 
 # 1. What users need blockchain for?
 
@@ -48,11 +52,11 @@ Use cases:
     - Collectibles   
 
 # ============================================
-# MINIMAL SET (5 critical categories)
+# LAYER 2. MINIMAL BLOCKCHAIN 
 # ============================================
-#  This cards are horizontal and occupy full width
+#  Card orientation: these cards are horizontal and occupy full screen width
 
-# 2. On-chain activity flow
+# 2. On-chain activity
 
 Transactions:
   Create (new):
@@ -71,7 +75,7 @@ Transactions:
    - Solvers and intent-based execution
    - Cross-chain bridges
 
-# 3. Asset types
+# 3. Assets
 Assets and contract types:
    - Native currency (BTC, ETH, SOL)
    - Stablecoins (USDC, USDT, DAI, USDe)
@@ -81,14 +85,14 @@ Assets and contract types:
    - Soulbound tokens (non-transferable)
    - Off-chain data (oracles, storage proofs)
 
-# 4. Economic models
+# 4. Chain economics
 Incentives:
    - Fee models (gas and priority fees)
    - MEV (order flow, arbitrage and liquidations)
    - Staking yields and rewards
    - Token supply and burn
 
-# 5. Networks
+# 5. Chains and ecosystems
 Networks:
    - Bitcoin (BTC)
    - Ethereum (ETH)
@@ -106,7 +110,7 @@ Foundations:
    - API and user interface, account and wallet abstraction 
 
 # ============================================
-# USER ACCESS (3 categories)
+# LAYER 3. USER ACCESS 
 # ============================================	
 
 # 7. Access and custody
@@ -125,7 +129,7 @@ Institutional custody:
    - Prime brokerage and settlement
 
 # ============================================
-# NETWORK ENHANCEMENTS (3 categories)
+# LAYER 4. NETWORK ENHANCEMENTS 
 # ============================================	
 
 # 8. Cross-network communication
@@ -150,7 +154,7 @@ Storage:
    - Decentralized databases (Ceramic and OrbitDB)
 
 # ============================================
-# FEATURES AND PROTECTION (3 categories)
+# LAYER 5. FEATURES AND PROTECTION (3 categories)
 # ============================================
 
 # 11. Privacy and user protection
@@ -180,12 +184,12 @@ Compliance:
 
 
 #======================================================
-# RISK MANAGEMENT (2 categories)
+# LAYER 6. RISK MANAGEMENT 
 #======================================================
 #  This cards are horizontal and occupy full width
 
-# 14. Materialized risks
-Historical failures:
+# 14. Lessons learned
+Past incidents:
 
   - CeFi failures: Mt. Gox (2014), FTX (2022), Celsius (2022), BlockFi (2022)
   - DeFi exploits:
@@ -209,8 +213,8 @@ Historical failures:
     - Regulatory clarity is essential for institutional adoption
     - "Code is law" fails when governance is weak
 	
-# 15. Persistent risks
-Recognised risks:
+# 15. Persistent threats
+Risk categories:
 
   - Algorithmic risks:
     - Mathematical bugs in consensus, bonding curves, or AMM formulas
@@ -244,5 +248,6 @@ Recognised risks:
     - Concentration of stablecoin reserves in a single bank (e.g., USDC/SVB)
     - Interconnected leverage across DeFi protocols
 	
-# Add later: regulatory approaches
-# Emerging:  New securities   New workflows
+# Add later - gnore now 
+# - regulatory approaches
+# - Emerging:  New securities   New workflows
