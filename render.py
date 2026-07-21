@@ -3,90 +3,15 @@ from __future__ import annotations
 
 import argparse
 import re
+from collections import OrderedDict
 from pathlib import Path
 from typing import Any
 
 import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-GROUP_SPECS = [
-    {
-        "class": "group1",
-        "id": "group-1-title",
-        "badge": "Group 1",
-        "title": "Use Cases",
-        "note": "Horizontal cards occupy the full content width.",
-        "horizontal": True,
-        "cards": [
-            {"title": "What users need blockchain for?", "subtitle": "Use cases"},
-        ],
-    },
-    {
-        "class": "layer2",
-        "id": "layer-2-title",
-        "badge": "Layer 2",
-        "title": "Minimal Blockchain",
-        "note": "Each card is horizontal and spans the full content width.",
-        "horizontal": True,
-        "cards": [
-            {"title": "Transactions", "subtitle": "Transactions"},
-            {"title": "Assets", "subtitle": "Assets and contract types"},
-            {"title": "Network economics", "subtitle": "Incentives"},
-            {"title": "Chains and ecosystems", "subtitle": "Networks"},
-            {"title": "Core technology", "subtitle": "Foundations"},
-        ],
-    },
-    {
-        "class": "layer3",
-        "id": "layer-3-title",
-        "badge": "Layer 3",
-        "title": "User Access and Custody",
-        "note": "",
-        "horizontal": False,
-        "cards": [
-            {"title": "Wallets and key management", "subtitle": "Wallets and key management"},
-            {"title": "Institutional custody", "subtitle": "Institutional custody"},
-        ],
-    },
-    {
-        "class": "layer4",
-        "id": "layer-4-title",
-        "badge": "Layer 4",
-        "title": "Network Enhancements",
-        "note": "",
-        "horizontal": False,
-        "cards": [
-            {"title": "Cross-network communication", "subtitle": "Interoperability"},
-            {"title": "External data", "subtitle": "Oracles and data feeds"},
-            {"title": "Data persistence", "subtitle": "Storage"},
-        ],
-    },
-    {
-        "class": "layer5",
-        "id": "layer-5-title",
-        "badge": "Layer 5",
-        "title": "Features and Protection",
-        "note": "Three categories.",
-        "horizontal": False,
-        "cards": [
-            {"title": "Privacy and user protection", "subtitle": "Privacy and user protection"},
-            {"title": "System protection", "subtitle": "Contract security"},
-            {"title": "Compliance", "subtitle": "Compliance"},
-        ],
-    },
-    {
-        "class": "layer6",
-        "id": "layer-6-title",
-        "badge": "Layer 6",
-        "title": "Risk Management",
-        "note": "Horizontal cards occupy the full content width.",
-        "horizontal": True,
-        "cards": [
-            {"title": "Lessons learned", "subtitle": "Past incidents"},
-            {"title": "Persistent threats", "subtitle": "Risk categories"},
-        ],
-    },
-]
+DEFAULT_GROUP = "Themes"
+VALID_ORIENTATIONS = {"horizontal", "vertical", "table"}
 
 
 def to_lines(value: Any) -> list[str]:
@@ -151,28 +76,40 @@ def parse_rows(payload: dict[str, Any]) -> list[dict[str, str]]:
     return rows
 
 
+def validate_orientation(value: Any) -> str:
+    if isinstance(value, str) and value in VALID_ORIENTATIONS:
+        return value
+    return "vertical"
+
+
 def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, Any]:
-    orientation = payload.get("_orientation")
+    orientation = validate_orientation(payload.get("_orientation"))
+    # Intentional exact comparison: subtitle is shown when source labels differ.
+    should_show_subtitle = subtitle != title
+    base = {
+        "title": title,
+        "subtitle": subtitle,
+        "show_subtitle": should_show_subtitle,
+        "orientation": orientation,
+        "css_class": "card card-wide" if orientation in {"horizontal", "table"} else "card",
+    }
 
     if orientation == "table":
         return {
-            "title": title,
-            "subtitle": subtitle,
+            **base,
             "layout": "table",
             "rows": parse_rows(payload),
         }
 
     if "items" in payload and payload["items"] and all(isinstance(item, str) for item in payload["items"]):
         return {
-            "title": title,
-            "subtitle": subtitle,
+            **base,
             "layout": "list",
             "items": payload["items"],
         }
 
     return {
-        "title": title,
-        "subtitle": subtitle,
+        **base,
         "layout": "blocks",
         "blocks": parse_blocks(payload),
     }
@@ -183,28 +120,79 @@ def extract_meta(text: str, pattern: str, fallback: str) -> str:
     return match.group(1).strip() if match else fallback
 
 
-def build_context(data: dict[str, Any], source_text: str) -> dict[str, Any]:
-    groups = []
-    for spec in GROUP_SPECS:
-        cards = []
-        for card in spec["cards"]:
-            subtitle = card["subtitle"]
-            payload = data.get(subtitle)
-            if not isinstance(payload, dict):
-                raise ValueError(f"Card data not found or invalid for '{subtitle}'")
-            cards.append(parse_card(card["title"], subtitle, payload))
+def parse_outline(source_text: str) -> tuple[OrderedDict[str, str], dict[str, dict[str, str]]]:
+    """Parse comment headers in themes.yaml into group metadata and card mappings."""
+    # Expected group header examples:
+    #   # GROUP 1. USE CASES
+    #   # LAYER 2. MINIMAL BLOCKCHAIN
+    # Captured group title is the trailing text after optional numbering.
+    group_pattern = re.compile(r"^#\s*(?:GROUP|LAYER)\s+(?:\d+\.\s+)?(.+?)\s*$")
+    subtitle_pattern = re.compile(r"^#\s*Subtitle:\s*(.+?)\s*$")
+    card_pattern = re.compile(r"^#\s*Card\s+\d+\.\s*(.+?)\s*$")
+    key_pattern = re.compile(r"^([^#\s][^:]*):\s*$")
 
-        groups.append(
-            {
-                "class": spec["class"],
-                "id": spec["id"],
-                "badge": spec["badge"],
-                "title": spec["title"],
-                "note": spec["note"],
-                "horizontal": spec["horizontal"],
-                "cards": cards,
-            }
-        )
+    group_meta: OrderedDict[str, str] = OrderedDict()
+    cards_by_subtitle: dict[str, dict[str, str]] = {}
+    # Fallback bucket used for cards when no explicit group header is parsed yet.
+    current_group_title = DEFAULT_GROUP
+    pending_card_title: str | None = None
+
+    for line in source_text.splitlines():
+        group_match = group_pattern.match(line)
+        if group_match:
+            current_group_title = group_match.group(1).strip()
+            if current_group_title not in group_meta:
+                group_meta[current_group_title] = ""
+            pending_card_title = None
+            continue
+
+        if not pending_card_title:
+            subtitle_match = subtitle_pattern.match(line)
+            # Store one subtitle per group; repeated subtitle comments are ignored.
+            if subtitle_match and current_group_title in group_meta:
+                if not group_meta[current_group_title]:
+                    group_meta[current_group_title] = subtitle_match.group(1).strip()
+                continue
+
+        card_match = card_pattern.match(line)
+        if card_match:
+            pending_card_title = card_match.group(1).strip()
+            continue
+
+        if pending_card_title:
+            key_match = key_pattern.match(line)
+            if key_match:
+                subtitle = key_match.group(1).strip()
+                cards_by_subtitle[subtitle] = {"group": current_group_title, "title": pending_card_title}
+                pending_card_title = None
+
+    if not group_meta:
+        group_meta[DEFAULT_GROUP] = ""
+
+    return group_meta, cards_by_subtitle
+
+
+def build_context(data: dict[str, Any], source_text: str) -> dict[str, Any]:
+    group_meta, cards_by_subtitle = parse_outline(source_text)
+    groups_map: OrderedDict[str, dict[str, Any]] = OrderedDict(
+        (title, {"title": title, "subtitle": subtitle, "cards": []}) for title, subtitle in group_meta.items()
+    )
+
+    for subtitle, payload in data.items():
+        if not isinstance(payload, dict):
+            continue
+
+        card_meta = cards_by_subtitle.get(subtitle, {})
+        # Cards without explicit preceding group headers are assigned to DEFAULT_GROUP.
+        group_title = card_meta.get("group", DEFAULT_GROUP)
+        card_title = card_meta.get("title", subtitle)
+
+        if group_title not in groups_map:
+            groups_map[group_title] = {"title": group_title, "subtitle": "", "cards": []}
+
+        groups_map[group_title]["cards"].append(parse_card(card_title, subtitle, payload))
+
+    groups = [group for group in groups_map.values() if group["cards"]]
 
     return {
         "groups": groups,

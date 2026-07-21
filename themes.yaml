@@ -14,6 +14,7 @@
 # ============================================
 # GROUP 1. USE CASES
 # ============================================
+# Subtitle: What blockchain is useful for?
 
 # Card 1. What users need blockchain for?
 
@@ -57,6 +58,7 @@ Use cases:
 # ============================================
 # LAYER 2. MINIMAL BLOCKCHAIN
 # ============================================
+# Subtitle: Core building blocks of blockchain systems
 
 # Card 2. Transactions
 
@@ -125,6 +127,7 @@ Foundations:
 # ============================================
 # LAYER 3. USER ACCESS AND CUSTODY
 # ============================================
+# Subtitle: How users and institutions hold and access assets
 
 # Card 7. Wallets and key management
 Wallets and key management:
@@ -150,6 +153,7 @@ Institutional custody:
 # ============================================
 # LAYER 4. NETWORK ENHANCEMENTS
 # ============================================
+# Subtitle: Components that expand blockchain capabilities
 
 # Card 9. Cross-network communication
 Interoperability:
@@ -182,6 +186,7 @@ Storage:
 # ============================================
 # LAYER 5. FEATURES AND PROTECTION (3 categories)
 # ============================================
+# Subtitle: Privacy, safeguards and compliance controls
 
 # Card 12. Privacy and user protection
 Privacy and user protection:
@@ -218,6 +223,7 @@ Compliance:
 # ======================================================
 # LAYER 6. RISK MANAGEMENT
 # ======================================================
+# Subtitle: Lessons and persistent risks across ecosystems
 
 # Card 15. Lessons learned
 Past incidents:
