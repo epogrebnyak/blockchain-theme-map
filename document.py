@@ -1,5 +1,5 @@
 from typing import Literal
-from pydantic import BaseModel
+from pydantic import AliasChoices, BaseModel, Field
 
 
 class Item(BaseModel):
@@ -10,7 +10,11 @@ class Item(BaseModel):
 
 class Card(BaseModel):
     title: str
-    orientation: Literal["horizontal", "vertical", "table"] = "horizontal"
+    orientation: Literal["horizontal", "vertical", "table"] = Field(
+        default="horizontal",
+        validation_alias=AliasChoices("orientation", "_orientation"),
+        serialization_alias="orientation",
+    )
     items: list[Item]
 
 
