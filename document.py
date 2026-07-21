@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 class Item(BaseModel):
     line: str
     comment: str = ""
+    is_header: bool = False  # For grouping items
 
 
 class Card(BaseModel):
@@ -13,8 +14,7 @@ class Card(BaseModel):
         default="horizontal",
         alias="orientation"
     )
-    items: list[Item] = []
-    sections: dict[str, list[str]] = {}  # For cards with named subsections
+    items: list[Item]
 
     class Config:
         populate_by_name = True
@@ -33,8 +33,7 @@ class Document(BaseModel):
     sections: list[Section]
 
 
-# Create all sections...
-
+# Create document
 document = Document(
     title="Blockchain and Digital Assets Theme Map",
     last_revision="July 21, 2026",
@@ -47,42 +46,41 @@ document = Document(
                 Card(
                     title="What users need blockchain for?",
                     orientation="horizontal",
-                    sections={
-                        "Speculative": [
-                            "Spot trading (BTC, ETH, altcoins)",
-                            "Memecoins",
-                            "Prediction markets"
-                        ],
-                        "Institutional finance (CeFi)": [
-                            "Payments",
-                            "Exchange trading",
-                            "Custody and prime brokerage",
-                            "RWA issuance and trading",
-                            "Derivatives"
-                        ],
-                        "Decentralised finance (DeFi)": [
-                            "Staking (Lido, Rocket Pool)",
-                            "Collateralised lending (Aave, Compound)",
-                            "Exchange/AMM (Uniswap, Curve)",
-                            "Derivatives (dYdX, GMX, perpetuals)",
-                            "RWA protocols (MakerDAO, Centrifuge)"
-                        ],
-                        "Physical": [
-                            "Wireless networks (Helium)",
-                            "Storage (Filecoin, Arweave)",
-                            "Compute (Render, Akash)",
-                            "Supply chain and provenance"
-                        ],
-                        "Social and governance": [
-                            "Identity",
-                            "Reputation and credentials",
-                            "Voting rights, DAOs"
-                        ],
-                        "Entertainment": [
-                            "Gaming",
-                            "Collectibles"
-                        ]
-                    }
+                    items=[
+                        Item(line="Speculative", is_header=True),
+                        Item(line="Spot trading (BTC, ETH, altcoins)"),
+                        Item(line="Memecoins"),
+                        Item(line="Prediction markets"),
+                        
+                        Item(line="Institutional finance (CeFi)", is_header=True),
+                        Item(line="Payments"),
+                        Item(line="Exchange trading"),
+                        Item(line="Custody and prime brokerage"),
+                        Item(line="RWA issuance and trading"),
+                        Item(line="Derivatives"),
+                        
+                        Item(line="Decentralised finance (DeFi)", is_header=True),
+                        Item(line="Staking (Lido, Rocket Pool)"),
+                        Item(line="Collateralised lending (Aave, Compound)"),
+                        Item(line="Exchange/AMM (Uniswap, Curve)"),
+                        Item(line="Derivatives (dYdX, GMX, perpetuals)"),
+                        Item(line="RWA protocols (MakerDAO, Centrifuge)"),
+                        
+                        Item(line="Physical", is_header=True),
+                        Item(line="Wireless networks (Helium)"),
+                        Item(line="Storage (Filecoin, Arweave)"),
+                        Item(line="Compute (Render, Akash)"),
+                        Item(line="Supply chain and provenance"),
+                        
+                        Item(line="Social and governance", is_header=True),
+                        Item(line="Identity"),
+                        Item(line="Reputation and credentials"),
+                        Item(line="Voting rights, DAOs"),
+                        
+                        Item(line="Entertainment", is_header=True),
+                        Item(line="Gaming"),
+                        Item(line="Collectibles")
+                    ]
                 )
             ]
         ),
@@ -93,25 +91,24 @@ document = Document(
                 Card(
                     title="Transactions",
                     orientation="horizontal",
-                    sections={
-                        "Create": [
-                            "Native issuance (block rewards, staking and validation)",
-                            "Token minting",
-                            "Airdrops and rewards"
-                        ],
-                        "Acquire": [
-                            "At the table or P2P",
-                            "Broker, ATM or card",
-                            "Exchanges"
-                        ],
-                        "Exchange": [
-                            "Centralised exchanges (CEX)",
-                            "Decentralised protocols (DEX)",
-                            "Aggregators",
-                            "Solvers and intent-based execution",
-                            "Cross-chain bridges"
-                        ]
-                    }
+                    items=[
+                        Item(line="Create", is_header=True),
+                        Item(line="Native issuance (block rewards, staking and validation)"),
+                        Item(line="Token minting"),
+                        Item(line="Airdrops and rewards"),
+                        
+                        Item(line="Acquire", is_header=True),
+                        Item(line="At the table or P2P"),
+                        Item(line="Broker, ATM or card"),
+                        Item(line="Exchanges"),
+                        
+                        Item(line="Exchange", is_header=True),
+                        Item(line="Centralised exchanges (CEX)"),
+                        Item(line="Decentralised protocols (DEX)"),
+                        Item(line="Aggregators"),
+                        Item(line="Solvers and intent-based execution"),
+                        Item(line="Cross-chain bridges")
+                    ]
                 ),
                 Card(
                     title="Assets and contract types",
@@ -272,26 +269,25 @@ document = Document(
                 Card(
                     title="Past incidents",
                     orientation="horizontal",
-                    sections={
-                        "CeFi failures": [
-                            "Mt. Gox (2014)",
-                            "FTX (2022), Celsius (2022), BlockFi (2022)"
-                        ],
-                        "DeFi exploits": [
-                            "The DAO (2016), Poly Network (2021), Ronin Bridge (2022), Euler Finance (2023)"
-                        ],
-                        "Stablecoin collapses": [
-                            "Terra/LUNA (2022), USDC de-peg (2023)"
-                        ],
-                        "Speculative waves": [
-                            "ICO boom (2017-2018)",
-                            "NFT bubble (2021-2022)"
-                        ],
-                        "Regulatory actions": [
-                            "Binance (2023-2024)",
-                            "Tornado Cash (2022)"
-                        ]
-                    }
+                    items=[
+                        Item(line="CeFi failures", is_header=True),
+                        Item(line="Mt. Gox (2014)"),
+                        Item(line="FTX (2022), Celsius (2022), BlockFi (2022)"),
+                        
+                        Item(line="DeFi exploits", is_header=True),
+                        Item(line="The DAO (2016), Poly Network (2021), Ronin Bridge (2022), Euler Finance (2023)"),
+                        
+                        Item(line="Stablecoin collapses", is_header=True),
+                        Item(line="Terra/LUNA (2022), USDC de-peg (2023)"),
+                        
+                        Item(line="Speculative waves", is_header=True),
+                        Item(line="ICO boom (2017-2018)"),
+                        Item(line="NFT bubble (2021-2022)"),
+                        
+                        Item(line="Regulatory actions", is_header=True),
+                        Item(line="Binance (2023-2024)"),
+                        Item(line="Tornado Cash (2022)")
+                    ]
                 )
             ]
         )
@@ -299,21 +295,51 @@ document = Document(
 )
 
 
-# Helper function to access document metadata
+# Helper functions
 def get_document_info(doc: Document) -> dict:
     return {
         "title": doc.title,
         "last_revision": doc.last_revision,
         "url": doc.url,
         "total_sections": len(doc.sections),
-        "total_cards": sum(len(section.cards) for section in doc.sections)
+        "total_cards": sum(len(section.cards) for section in doc.sections),
+        "total_items": sum(
+            len(card.items) 
+            for section in doc.sections 
+            for card in section.cards
+        )
     }
+
+
+def get_items_by_group(card: Card) -> dict[str, list[Item]]:
+    """Group items by headers in a card"""
+    groups = {}
+    current_group = "Uncategorized"
+    groups[current_group] = []
+    
+    for item in card.items:
+        if item.is_header:
+            current_group = item.line
+            groups[current_group] = []
+        else:
+            groups[current_group].append(item)
+    
+    return groups
 
 
 # Example usage
 if __name__ == "__main__":
-    print(f"Document: {document.title}")
-    print(f"Last revision: {document.last_revision}")
-    print(f"URL: {document.url}")
-    print(f"Total sections: {len(document.sections)}")
-    print(f"Total cards: {sum(len(section.cards) for section in document.sections)}")
+    info = get_document_info(document)
+    print(f"Document: {info['title']}")
+    print(f"Last revision: {info['last_revision']}")
+    print(f"URL: {info['url']}")
+    print(f"Total sections: {info['total_sections']}")
+    print(f"Total cards: {info['total_cards']}")
+    print(f"Total items: {info['total_items']}")
+    
+    # Show grouping for first card
+    first_card = document.sections[0].cards[0]
+    groups = get_items_by_group(first_card)
+    print(f"\nGroups in '{first_card.title}':")
+    for group_name, items in groups.items():
+        print(f"  {group_name}: {len(items)} items")
