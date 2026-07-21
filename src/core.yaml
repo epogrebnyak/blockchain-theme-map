@@ -1,0 +1,59 @@
+Transactions:
+  _orientation: horizontal
+  Create:
+    - Native issuance:
+       - block rewards
+       - staking 
+       - validation
+    - Token minting
+    - Airdrops and rewards
+
+  Exchange:
+    - Centralised exchanges (CEX)
+    - Decentralised protocols (DEX)
+    - Aggregators, solvers and intent-based execution
+    - Cross-chain bridges
+
+  On/off-ramp:
+    - At the table, P2P, OTC
+    - Provider (broker, ATM or card)
+    - Exchanges
+
+Assets:
+  _orientation: horizontal
+  items:
+    - Native currency (BTC, ETH, SOL)
+    - Stablecoins (USDC, USDT, DAI, USDe)
+    - Other fungible tokens (ERC-20)
+    - Non-fungible tokens (NFTs)
+    - Semi-fungible tokens
+    - Soulbound tokens (non-transferable)
+    - Off-chain data (oracles, storage proofs)
+
+Network economics:
+  _orientation: horizontal
+  items:
+    - Token supply and burn
+    - Staking yields and rewards
+    - Fee models (gas and priority fees)
+    - MEV (order flow, arbitrage and liquidations)
+
+Chains:
+  _orientation: horizontal
+  items:
+    - Bitcoin (BTC)
+    - Ethereum (ETH)
+    - L2 and L3 Rollups
+    - Alternative L1s (BNB, Solana, Tron)
+    - Private and consortium chains
+
+Foundations:
+  _orientation: horizontal
+  items:
+    - Cryptography (hashes, digital signatures)
+    - Address space
+    - Block structures
+    - Peer-to-peer networking (node discovery and gossip protocols)
+    - Consensus mechanisms (participants, rules and guarantees)
+    - Execution environments (VMs and state transitions)
+    - API and user interfaces
