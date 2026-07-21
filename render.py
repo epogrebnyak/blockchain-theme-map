@@ -84,6 +84,7 @@ def validate_orientation(value: Any) -> str:
 
 def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, Any]:
     orientation = validate_orientation(payload.get("_orientation"))
+    # Intentional exact comparison: subtitle is shown when source labels differ.
     should_show_subtitle = subtitle != title
     base = {
         "title": title,
@@ -133,24 +134,24 @@ def parse_outline(source_text: str) -> tuple[OrderedDict[str, str], dict[str, di
     group_meta: OrderedDict[str, str] = OrderedDict()
     cards_by_subtitle: dict[str, dict[str, str]] = {}
     # Fallback bucket used for cards when no explicit group header is parsed yet.
-    current_group = DEFAULT_GROUP
+    current_group_title = DEFAULT_GROUP
     pending_card_title: str | None = None
 
     for line in source_text.splitlines():
         group_match = group_pattern.match(line)
         if group_match:
-            current_group = group_match.group(1).strip()
-            if current_group not in group_meta:
-                group_meta[current_group] = ""
+            current_group_title = group_match.group(1).strip()
+            if current_group_title not in group_meta:
+                group_meta[current_group_title] = ""
             pending_card_title = None
             continue
 
         if not pending_card_title:
             subtitle_match = subtitle_pattern.match(line)
             # Store one subtitle per group; repeated subtitle comments are ignored.
-            if subtitle_match and current_group in group_meta:
-                if not group_meta[current_group]:
-                    group_meta[current_group] = subtitle_match.group(1).strip()
+            if subtitle_match and current_group_title in group_meta:
+                if not group_meta[current_group_title]:
+                    group_meta[current_group_title] = subtitle_match.group(1).strip()
                 continue
 
         card_match = card_pattern.match(line)
@@ -162,7 +163,7 @@ def parse_outline(source_text: str) -> tuple[OrderedDict[str, str], dict[str, di
             key_match = key_pattern.match(line)
             if key_match:
                 subtitle = key_match.group(1).strip()
-                cards_by_subtitle[subtitle] = {"group": current_group, "title": pending_card_title}
+                cards_by_subtitle[subtitle] = {"group": current_group_title, "title": pending_card_title}
                 pending_card_title = None
 
     if not group_meta:
