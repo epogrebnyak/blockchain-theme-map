@@ -116,7 +116,7 @@
         <h2>{{ group.title }}</h2>
         <div class="cards">
           {% for card in group.cards %}
-          <article class="card{% if card.orientation == 'horizontal' %} card-wide{% endif %}">
+          <article class="card{% if card.orientation in ['horizontal', 'table'] %} card-wide{% endif %}">
             <h3>{{ card.title }}</h3>
             {% if card.show_subtitle %}<p class="card-subtitle">{{ card.subtitle }}</p>{% endif %}
 

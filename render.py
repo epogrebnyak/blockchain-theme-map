@@ -11,6 +11,7 @@ import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 DEFAULT_GROUP = "Themes"
+VALID_ORIENTATIONS = {"horizontal", "vertical", "table"}
 
 
 def to_lines(value: Any) -> list[str]:
@@ -77,14 +78,15 @@ def parse_rows(payload: dict[str, Any]) -> list[dict[str, str]]:
 
 def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, Any]:
     orientation = payload.get("_orientation", "vertical")
-    if not isinstance(orientation, str):
+    if not isinstance(orientation, str) or orientation not in VALID_ORIENTATIONS:
         orientation = "vertical"
+    show_subtitle = subtitle != title
 
     if orientation == "table":
         return {
             "title": title,
             "subtitle": subtitle,
-            "show_subtitle": subtitle != title,
+            "show_subtitle": show_subtitle,
             "orientation": orientation,
             "layout": "table",
             "rows": parse_rows(payload),
@@ -94,7 +96,7 @@ def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, 
         return {
             "title": title,
             "subtitle": subtitle,
-            "show_subtitle": subtitle != title,
+            "show_subtitle": show_subtitle,
             "orientation": orientation,
             "layout": "list",
             "items": payload["items"],
@@ -103,7 +105,7 @@ def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, 
     return {
         "title": title,
         "subtitle": subtitle,
-        "show_subtitle": subtitle != title,
+        "show_subtitle": show_subtitle,
         "orientation": orientation,
         "layout": "blocks",
         "blocks": parse_blocks(payload),
@@ -115,12 +117,8 @@ def extract_meta(text: str, pattern: str, fallback: str) -> str:
     return match.group(1).strip() if match else fallback
 
 
-def to_title_case(label: str) -> str:
-    return " ".join(word.capitalize() for word in label.split())
-
-
 def parse_outline(source_text: str) -> tuple[list[str], dict[str, dict[str, str]]]:
-    group_pattern = re.compile(r"^#\s*(?:GROUP|LAYER)\s+\d+\.\s+(.+?)\s*$")
+    group_pattern = re.compile(r"^#\s*(?:GROUP|LAYER)\s+(?:\d+\.\s+)?(.+?)\s*$")
     card_pattern = re.compile(r"^#\s*Card\s+\d+\.\s*(.+?)\s*$")
     key_pattern = re.compile(r"^([^#\s][^:]*):\s*$")
 
@@ -132,7 +130,7 @@ def parse_outline(source_text: str) -> tuple[list[str], dict[str, dict[str, str]
     for line in source_text.splitlines():
         group_match = group_pattern.match(line)
         if group_match:
-            current_group = to_title_case(group_match.group(1))
+            current_group = group_match.group(1).strip()
             if current_group not in group_order:
                 group_order.append(current_group)
             pending_card_title = None
