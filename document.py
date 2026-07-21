@@ -10,14 +10,8 @@ class Item(BaseModel):
 
 class Card(BaseModel):
     title: str
-    _orientation: Literal["horizontal", "vertical", "table"] = Field(
-        default="horizontal",
-        alias="orientation"
-    )
+    orientation: Literal["horizontal", "vertical", "table"] = "horizontal"
     items: list[Item]
-
-    class Config:
-        populate_by_name = True
 
 
 class Section(BaseModel):
@@ -327,19 +321,5 @@ def get_items_by_group(card: Card) -> dict[str, list[Item]]:
     return groups
 
 
-# Example usage
 if __name__ == "__main__":
-    info = get_document_info(document)
-    print(f"Document: {info['title']}")
-    print(f"Last revision: {info['last_revision']}")
-    print(f"URL: {info['url']}")
-    print(f"Total sections: {info['total_sections']}")
-    print(f"Total cards: {info['total_cards']}")
-    print(f"Total items: {info['total_items']}")
-    
-    # Show grouping for first card
-    first_card = document.sections[0].cards[0]
-    groups = get_items_by_group(first_card)
-    print(f"\nGroups in '{first_card.title}':")
-    for group_name, items in groups.items():
-        print(f"  {group_name}: {len(items)} items")
+    print(document.model_dump_json(indent=2))
