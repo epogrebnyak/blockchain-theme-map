@@ -703,7 +703,7 @@
 <section class="layer l5" data-layer="5">
   <div class="layer-header">
     <span class="layer-badge">Layer 5</span>
-    <span class="layer-title">Features and Protection (3 categories)</span>
+    <span class="layer-title" data-base-title="Features and Protection" data-count-label="categories">Features and Protection</span>
   </div>
   <div class="category-grid">
     <div class="card" data-category="privacy-and-user-protection">
@@ -807,7 +807,7 @@
             <div class="subcategory-label">CeFi failures</div>
             <ul class="item-list">
               <li>Mt. Gox (2014)</li>
-              <li>TX (2022), Celsius (2022), BlockFi (2022)</li>
+              <li>FTX (2022), Celsius (2022), BlockFi (2022)</li>
             </ul>
           </div>
           <div class="subcategory">
@@ -952,6 +952,13 @@
 
   document.getElementById('collapse-all').addEventListener('click', () => {
     document.querySelectorAll('.card').forEach(card => setCardOpen(card, false));
+  });
+
+  document.querySelectorAll('.layer-title[data-base-title]').forEach(title => {
+    const section = title.closest('.layer');
+    const count = section ? section.querySelectorAll('.card').length : 0;
+    const label = title.dataset.countLabel || 'items';
+    title.textContent = `${title.dataset.baseTitle} (${count} ${label})`;
   });
 
   const searchInput = document.getElementById('search');
