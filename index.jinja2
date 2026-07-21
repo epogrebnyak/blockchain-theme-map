@@ -330,30 +330,30 @@
 
   <main>
     {% for group in groups %}
-    <section class="theme-group {{ group.class|e }}{% if group.horizontal %} horizontal{% endif %}" aria-labelledby="{{ group.id|e }}">
+    <section class="theme-group {{ group.class }}{% if group.horizontal %} horizontal{% endif %}" aria-labelledby="{{ group.id }}">
       <div class="group-header">
-        <span class="group-badge">{{ group.badge|e }}</span>
+        <span class="group-badge">{{ group.badge }}</span>
         <div>
-          <div class="group-title" id="{{ group.id|e }}">{{ group.title|e }}</div>
-          {% if group.note %}<div class="group-note">{{ group.note|e }}</div>{% endif %}
+          <div class="group-title" id="{{ group.id }}">{{ group.title }}</div>
+          {% if group.note %}<div class="group-note">{{ group.note }}</div>{% endif %}
         </div>
       </div>
       <div class="cards-grid">
         {% for card in group.cards %}
         <article class="card">
           <div class="card-header">
-            <h2 class="card-title">{{ card.title|e }}</h2>
-            <span class="card-subtitle">{{ card.subtitle|e }}</span>
+            <h2 class="card-title">{{ card.title }}</h2>
+            <span class="card-subtitle">{{ card.subtitle }}</span>
           </div>
 
           {% if card.layout == 'blocks' %}
           <div class="content-grid">
             {% for block in card.blocks %}
             <section class="content-block">
-              <h3>{{ block.title|e }}</h3>
+              <h3>{{ block.title }}</h3>
               <ul>
-                {% for item in block.items %}
-                <li>{{ item|e }}</li>
+                {% for item in block["items"] %}
+                <li>{{ item }}</li>
                 {% endfor %}
               </ul>
             </section>
@@ -362,8 +362,8 @@
           {% elif card.layout == 'list' %}
           <div class="single-list">
             <ul>
-              {% for item in card.items %}
-              <li>{{ item|e }}</li>
+              {% for item in card["items"] %}
+              <li>{{ item }}</li>
               {% endfor %}
             </ul>
           </div>
@@ -380,9 +380,9 @@
               <tbody>
                 {% for row in card.rows %}
                 <tr>
-                  <th scope="row">{{ row.category|e }}</th>
-                  <td>{{ row.description|e }}</td>
-                  <td>{{ row.example|e }}</td>
+                  <th scope="row">{{ row.category }}</th>
+                  <td>{{ row.description }}</td>
+                  <td>{{ row.example }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
