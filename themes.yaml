@@ -60,16 +60,17 @@ Use cases:
 # 2. On-chain activity
 
 Transactions:
-  Create (new):
+  Create:
    - Native issuance (block rewards, staking and validation)
    - Token minting
    - Airdrops and rewards
 
-  Acquire (entry):
-   - At the table and P2P
-   - Fiat on-ramp (broker, ATM and card)
+  Acquire:
+   - At the table or P2P
+   - Broker, ATM or card
+   - Exchanges
 
-  Exchange (secondary):
+  Exchange:
    - Centralised exchanges (CEX)
    - Decentralised protocols (DEX)
    - Aggregators 
@@ -86,7 +87,7 @@ Assets and contract types:
    - Soulbound tokens (non-transferable)
    - Off-chain data (oracles, storage proofs)
 
-# 4. Chain economics
+# 4. Network economics
 Incentives:
    - Fee models (gas and priority fees)
    - MEV (order flow, arbitrage and liquidations)
