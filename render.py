@@ -117,12 +117,13 @@ def extract_meta(text: str, pattern: str, fallback: str) -> str:
     return match.group(1).strip() if match else fallback
 
 
-def parse_outline(source_text: str) -> tuple[list[str], dict[str, dict[str, str]]]:
+def parse_outline(source_text: str) -> tuple[OrderedDict[str, str], dict[str, dict[str, str]]]:
     group_pattern = re.compile(r"^#\s*(?:GROUP|LAYER)\s+(?:\d+\.\s+)?(.+?)\s*$")
+    subtitle_pattern = re.compile(r"^#\s*Subtitle:\s*(.+?)\s*$")
     card_pattern = re.compile(r"^#\s*Card\s+\d+\.\s*(.+?)\s*$")
     key_pattern = re.compile(r"^([^#\s][^:]*):\s*$")
 
-    group_order: list[str] = []
+    group_meta: OrderedDict[str, str] = OrderedDict()
     cards_by_subtitle: dict[str, dict[str, str]] = {}
     current_group = DEFAULT_GROUP
     pending_card_title: str | None = None
@@ -131,10 +132,16 @@ def parse_outline(source_text: str) -> tuple[list[str], dict[str, dict[str, str]
         group_match = group_pattern.match(line)
         if group_match:
             current_group = group_match.group(1).strip()
-            if current_group not in group_order:
-                group_order.append(current_group)
+            if current_group not in group_meta:
+                group_meta[current_group] = ""
             pending_card_title = None
             continue
+
+        if not pending_card_title:
+            subtitle_match = subtitle_pattern.match(line)
+            if subtitle_match and current_group in group_meta and not group_meta[current_group]:
+                group_meta[current_group] = subtitle_match.group(1).strip()
+                continue
 
         card_match = card_pattern.match(line)
         if card_match:
@@ -148,16 +155,16 @@ def parse_outline(source_text: str) -> tuple[list[str], dict[str, dict[str, str]
                 cards_by_subtitle[subtitle] = {"group": current_group, "title": pending_card_title}
                 pending_card_title = None
 
-    if not group_order:
-        group_order.append(DEFAULT_GROUP)
+    if not group_meta:
+        group_meta[DEFAULT_GROUP] = ""
 
-    return group_order, cards_by_subtitle
+    return group_meta, cards_by_subtitle
 
 
 def build_context(data: dict[str, Any], source_text: str) -> dict[str, Any]:
-    group_order, cards_by_subtitle = parse_outline(source_text)
+    group_meta, cards_by_subtitle = parse_outline(source_text)
     groups_map: OrderedDict[str, dict[str, Any]] = OrderedDict(
-        (title, {"title": title, "cards": []}) for title in group_order
+        (title, {"title": title, "subtitle": subtitle, "cards": []}) for title, subtitle in group_meta.items()
     )
 
     for subtitle, payload in data.items():
@@ -169,7 +176,7 @@ def build_context(data: dict[str, Any], source_text: str) -> dict[str, Any]:
         card_title = card_meta.get("title", subtitle)
 
         if group_title not in groups_map:
-            groups_map[group_title] = {"title": group_title, "cards": []}
+            groups_map[group_title] = {"title": group_title, "subtitle": "", "cards": []}
 
         groups_map[group_title]["cards"].append(parse_card(card_title, subtitle, payload))
 
