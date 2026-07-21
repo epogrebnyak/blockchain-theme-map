@@ -76,37 +76,39 @@ def parse_rows(payload: dict[str, Any]) -> list[dict[str, str]]:
     return rows
 
 
+def validate_orientation(value: Any) -> str:
+    if isinstance(value, str) and value in VALID_ORIENTATIONS:
+        return value
+    return "vertical"
+
+
 def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, Any]:
-    orientation = payload.get("_orientation")
-    if not isinstance(orientation, str) or orientation not in VALID_ORIENTATIONS:
-        orientation = "vertical"
+    orientation = validate_orientation(payload.get("_orientation"))
     should_show_subtitle = subtitle != title
+    base = {
+        "title": title,
+        "subtitle": subtitle,
+        "show_subtitle": should_show_subtitle,
+        "orientation": orientation,
+        "css_class": "card card-wide" if orientation in {"horizontal", "table"} else "card",
+    }
 
     if orientation == "table":
         return {
-            "title": title,
-            "subtitle": subtitle,
-            "show_subtitle": should_show_subtitle,
-            "orientation": orientation,
+            **base,
             "layout": "table",
             "rows": parse_rows(payload),
         }
 
     if "items" in payload and payload["items"] and all(isinstance(item, str) for item in payload["items"]):
         return {
-            "title": title,
-            "subtitle": subtitle,
-            "show_subtitle": should_show_subtitle,
-            "orientation": orientation,
+            **base,
             "layout": "list",
             "items": payload["items"],
         }
 
     return {
-        "title": title,
-        "subtitle": subtitle,
-        "show_subtitle": should_show_subtitle,
-        "orientation": orientation,
+        **base,
         "layout": "blocks",
         "blocks": parse_blocks(payload),
     }
@@ -146,8 +148,9 @@ def parse_outline(source_text: str) -> tuple[OrderedDict[str, str], dict[str, di
         if not pending_card_title:
             subtitle_match = subtitle_pattern.match(line)
             # Store one subtitle per group; repeated subtitle comments are ignored.
-            if subtitle_match and current_group in group_meta and not group_meta[current_group]:
-                group_meta[current_group] = subtitle_match.group(1).strip()
+            if subtitle_match and current_group in group_meta:
+                if not group_meta[current_group]:
+                    group_meta[current_group] = subtitle_match.group(1).strip()
                 continue
 
         card_match = card_pattern.match(line)
