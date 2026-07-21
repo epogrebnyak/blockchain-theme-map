@@ -1,35 +1,36 @@
 # Blockchain and Digital Assets Theme Map
-# Last revision: July 21, 2026 
+# Last revision: July 21, 2026
 # URL: https://github.com/epogrebnyak/blockchain-theme-map
 
-# Conversion rules for createing HTML:
-# - Do not replace and with &. Ther should be no & in HTML  
+# Conversion rules for creating HTML:
+# - Do not replace and with &. There should be no & in HTML
 # - Add link to the repo https://github.com/epogrebnyak/blockchain-theme-map with github logo
 # - Do not use emojis
-# - Where mentioned card orientation: horizontal - these cards are horizontal and occupy full screen width
+# - _orientation: horizontal - card occupies full screen width
+# - _orientation: vertical   - card is a column in a multi-column grid
+# - _orientation: table      - card is rendered as a multi-column table
 
 
 # ============================================
 # GROUP 1. USE CASES
 # ============================================
-#  Card orientation: these cards are horizontal and occupy full screen width
 
 # Card 1. What users need blockchain for?
 
 Use cases:
-
+  _orientation: horizontal
   Speculative:
-	- Spot trading (BTC, ETH, altcoins)
-	- Memecoins
-	- Prediction markets
-	
+    - Spot trading (BTC, ETH, altcoins)
+    - Memecoins
+    - Prediction markets
+
   Institutional finance (CeFi):
     - Payments
     - Exchange trading
     - Custody and prime brokerage
-    - RWA issuance and trading 
+    - RWA issuance and trading
     - Derivatives
-	
+
   Decentralised finance (DeFi):
     - Staking (Lido, Rocket Pool)
     - Collateralised lending (Aave, Compound)
@@ -50,111 +51,133 @@ Use cases:
 
   Entertainment:
     - Gaming
-    - Collectibles   
+    - Collectibles
+
 
 # ============================================
-# LAYER 2. MINIMAL BLOCKCHAIN 
+# LAYER 2. MINIMAL BLOCKCHAIN
 # ============================================
-#  Card orientation: these cards are horizontal and occupy full screen width
 
 # Card 2. Transactions
 
 Transactions:
+  _orientation: horizontal
   Create:
-   - Native issuance (block rewards, staking and validation)
-   - Token minting
-   - Airdrops and rewards
+    - Native issuance (block rewards, staking and validation)
+    - Token minting
+    - Airdrops and rewards
 
   Acquire:
-   - At the table or P2P
-   - Broker, ATM or card
-   - Exchanges
+    - At the table or P2P
+    - Broker, ATM or card
+    - Exchanges
 
   Exchange:
-   - Centralised exchanges (CEX)
-   - Decentralised protocols (DEX)
-   - Aggregators 
-   - Solvers and intent-based execution
-   - Cross-chain bridges
+    - Centralised exchanges (CEX)
+    - Decentralised protocols (DEX)
+    - Aggregators
+    - Solvers and intent-based execution
+    - Cross-chain bridges
 
 # Card 3. Assets
 Assets and contract types:
-   - Native currency (BTC, ETH, SOL)
-   - Stablecoins (USDC, USDT, DAI, USDe)
-   - Other fungible tokens (ERC-20, SPL)
-   - Non-fungible tokens (NFTs)
-   - Semi-fungible tokens
-   - Soulbound tokens (non-transferable)
-   - Off-chain data (oracles, storage proofs)
+  _orientation: horizontal
+  items:
+    - Native currency (BTC, ETH, SOL)
+    - Stablecoins (USDC, USDT, DAI, USDe)
+    - Other fungible tokens (ERC-20, SPL)
+    - Non-fungible tokens (NFTs)
+    - Semi-fungible tokens
+    - Soulbound tokens (non-transferable)
+    - Off-chain data (oracles, storage proofs)
 
 # Card 4. Network economics
 Incentives:
-   - Fee models (gas and priority fees)
-   - MEV (order flow, arbitrage and liquidations)
-   - Staking yields and rewards
-   - Token supply and burn
+  _orientation: horizontal
+  items:
+    - Fee models (gas and priority fees)
+    - MEV (order flow, arbitrage and liquidations)
+    - Staking yields and rewards
+    - Token supply and burn
 
 # Card 5. Chains and ecosystems
 Networks:
-   - Bitcoin (BTC)
-   - Ethereum (ETH)
-   - L2 and L3 Rollups
-   - Alternative L1s (BNB, Solana, Tron)
-   - Private and consortium chains
+  _orientation: horizontal
+  items:
+    - Bitcoin (BTC)
+    - Ethereum (ETH)
+    - L2 and L3 Rollups
+    - Alternative L1s (BNB, Solana, Tron)
+    - Private and consortium chains
 
 # Card 6. Core technology
 Foundations:
-   - Cryptography (hashing, digital signatures and Merkle trees)
-   - Address space and block data structures
-   - Peer-to-peer networking (node discovery and gossip protocols)
-   - Consensus mechanisms (participants, rules and guarantees)
-   - Execution environments (VMs and state transitions)
-   - API and user interface, account and wallet abstraction 
+  _orientation: horizontal
+  items:
+    - Cryptography (hashing, digital signatures and Merkle trees)
+    - Address space and block data structures
+    - Peer-to-peer networking (node discovery and gossip protocols)
+    - Consensus mechanisms (participants, rules and guarantees)
+    - Execution environments (VMs and state transitions)
+    - API and user interface, account and wallet abstraction
+
 
 # ============================================
-# LAYER 3. USER ACCESS AND CUSTODY 
-# ============================================	
+# LAYER 3. USER ACCESS AND CUSTODY
+# ============================================
 
 # Card 7. Wallets and key management
 Wallets and key management:
-   - Self-custodial wallets (MetaMask, Phantom, Trust Wallet)
-   - Smart contract wallets (Safe, Argent, Sequence)
-   - Account abstraction (ERC-4337, ERC-7579)
-   - Paymasters (gas abstraction, sponsored transactions)
-   - Hardware wallets (Ledger, Trezor)
-   - Key recovery and social recovery
+  _orientation: vertical
+  items:
+    - Self-custodial wallets (MetaMask, Phantom, Trust Wallet)
+    - Smart contract wallets (Safe, Argent, Sequence)
+    - Account abstraction (ERC-4337, ERC-7579)
+    - Paymasters (gas abstraction, sponsored transactions)
+    - Hardware wallets (Ledger, Trezor)
+    - Key recovery and social recovery
 
 # Card 8. Institutional custody
 Institutional custody:
-   - MPC wallets (Fireblocks, ZenGo)
-   - Multi-sig custody solutions
-   - Qualified custodians (Coinbase Custody, BitGo)
-   - Prime brokerage and settlement
+  _orientation: vertical
+  items:
+    - MPC wallets (Fireblocks, ZenGo)
+    - Multi-sig custody solutions
+    - Qualified custodians (Coinbase Custody, BitGo)
+    - Prime brokerage and settlement
+
 
 # ============================================
-# LAYER 4. NETWORK ENHANCEMENTS 
-# ============================================	
+# LAYER 4. NETWORK ENHANCEMENTS
+# ============================================
 
 # Card 9. Cross-network communication
 Interoperability:
-   - Bridges
-   - Cross-chain messaging
-   - Light clients
+  _orientation: vertical
+  items:
+    - Bridges
+    - Cross-chain messaging
+    - Light clients
 
 # Card 10. External data
 Oracles and data feeds:
-   - Price feeds (Chainlink)
-   - Randomness
-   - Cross-chain data
-   - Real-world event data (sports, weather and elections)
-   - Data aggregation and verification
+  _orientation: vertical
+  items:
+    - Price feeds (Chainlink)
+    - Randomness
+    - Cross-chain data
+    - Real-world event data (sports, weather and elections)
+    - Data aggregation and verification
 
 # Card 11. Data persistence
 Storage:
-   - On-chain storage (state and balances)
-   - Off-chain storage (IPFS, Arweave and Filecoin)
-   - Data availability layers (Celestia and EigenDA)
-   - Decentralized databases (Ceramic and OrbitDB)
+  _orientation: vertical
+  items:
+    - On-chain storage (state and balances)
+    - Off-chain storage (IPFS, Arweave and Filecoin)
+    - Data availability layers (Celestia and EigenDA)
+    - Decentralized databases (Ceramic and OrbitDB)
+
 
 # ============================================
 # LAYER 5. FEATURES AND PROTECTION (3 categories)
@@ -162,86 +185,92 @@ Storage:
 
 # Card 12. Privacy and user protection
 Privacy and user protection:
-   - Zero-knowledge proofs (ZK-SNARKs and ZK-STARKs)
-   - Stealth addresses
-   - Confidential transactions (hidden amounts)
-   - Private voting
-   - Encrypted metadata
-   - Selective disclosure (ZK-based KYC/age verification)
+  _orientation: vertical
+  items:
+    - Zero-knowledge proofs (ZK-SNARKs and ZK-STARKs)
+    - Stealth addresses
+    - Confidential transactions (hidden amounts)
+    - Private voting
+    - Encrypted metadata
+    - Selective disclosure (ZK-based KYC/age verification)
 
 # Card 13. System protection
 Contract security:
-   - Smart contract audits
-   - Multi-sig and custody
-   - Bug bounties
-   - Formal verification
-   - MEV protection
+  _orientation: vertical
+  items:
+    - Smart contract audits
+    - Multi-sig and custody
+    - Bug bounties
+    - Formal verification
+    - MEV protection
 
 # Card 14. Compliance
 Compliance:
-   - KYC and AML
-   - Sanctions screening
-   - Transfer restrictions
-   - Travel rule
-   - Reporting and tax
+  _orientation: vertical
+  items:
+    - KYC and AML
+    - Sanctions screening
+    - Transfer restrictions
+    - Travel rule
+    - Reporting and tax
 
 
-#======================================================
-# LAYER 6. RISK MANAGEMENT 
-#======================================================
-#  This cards are horizontal and occupy full width
+# ======================================================
+# LAYER 6. RISK MANAGEMENT
+# ======================================================
 
 # Card 15. Lessons learned
 Past incidents:
+  _orientation: horizontal
+  items:
+    - CeFi failures:
+        - Mt. Gox (2014)
+        - FTX (2022), Celsius (2022), BlockFi (2022)
+    - DeFi exploits: The DAO (2016), Poly Network (2021), Ronin Bridge (2022), Euler Finance (2023)
+    - Stablecoin collapses: Terra/LUNA (2022), USDC de-peg (2023)
+    - Speculative waves:
+        - ICO boom (2017-2018)
+        - NFT bubble (2021-2022)
+    - Regulatory actions:
+        - Binance (2023-2024)
+        - Tornado Cash (2022)
 
-  - CeFi failures: 
-     - Mt. Gox (2014)
-	 - FTX (2022), Celsius (2022), BlockFi (2022)
-  - DeFi exploits: The DAO (2016), Poly Network (2021), Ronin Bridge (2022), Euler Finance (2023)
-  - Stablecoin collapses: Terra/LUNA (2022), USDC de-peg (2023)
-  - Speculative waves: 
-     - ICO boom (2017-2018)
-	 - NFT bubble (2021-2022)
-  - Regulatory actions:
-    - Binance (2023-2024)
-    - Tornado Cash (2022)
-	
-# Card  16. Persistent threats
+# Card 16. Persistent threats
 Risk categories:
-# For this category create a three-column table
+  _orientation: table
+  items:
+    - Algorithmic risks:
+        - Mathematical bugs in consensus, bonding curves, or AMM formulas
+        - Example: Terra/LUNA's death spiral was algorithmic, not a hack
 
-  - Algorithmic risks:
-    - Mathematical bugs in consensus, bonding curves, or AMM formulas
-    - Example: Terra/LUNA's death spiral was algorithmic, not a hack
+    - Oracle manipulation:
+        - Price feed manipulation via flash loans or low-liquidity pools
+        - Example: Mango Markets (2022) - exploited via manipulated oracle prices
 
-  - Oracle manipulation:
-    - Price feed manipulation via flash loans or low-liquidity pools
-    - Example: Mango Markets (2022) - exploited via manipulated oracle prices
+    - Bridge and interoperability risks:
+        - Cross-chain messages can be spoofed or replayed
+        - Example: Any bridge with a trusted validator set is a target
 
-  - Bridge and interoperability risks:
-    - Cross-chain messages can be spoofed or replayed
-    - Example: Any bridge with a trusted validator set is a target
+    - Smart contract vulnerabilities:
+        - Re-entrancy, access control, logic bugs, upgradeability risks
+        - Example: The DAO (2016), still relevant today
 
-  - Smart contract vulnerabilities:
-    - Re-entrancy, access control, logic bugs, upgradeability risks
-    - Example: The DAO (2016), still relevant today
+    - Key management and custody risks:
+        - Private key loss, theft, or compromise
+        - Social engineering, phishing, sim-swapping, insider threats
 
-  - Key management and custody risks:
-    - Private key loss, theft, or compromise
-    - Social engineering, phishing, sim-swapping, insider threats
+    - Governance risks:
+        - Token-based voting can be captured by whales or attackers
+        - Example: Aave, Compound - governance attacks remain theoretical but persistent
 
-  - Governance risks:
-    - Token-based voting can be captured by whales or attackers
-    - Example: Aave, Compound - governance attacks remain theoretical but persistent
+    - Behavioral and social engineering:
+        - Honey-pots, rug pulls, fake websites, malicious browser extensions
+        - Pump-and-dump schemes, influencer manipulation
 
-  - Behavioral and social engineering:
-    - Honey-pots, rug pulls, fake websites, malicious browser extensions
-    - Pump-and-dump schemes, influencer manipulation
+    - Systemic contagion:
+        - Concentration of stablecoin reserves in a single bank (e.g., USDC/SVB)
+        - Interconnected leverage across DeFi protocols
 
-  - Systemic contagion:
-    - Concentration of stablecoin reserves in a single bank (e.g., USDC/SVB)
-    - Interconnected leverage across DeFi protocols
-	
-# Add later - gnore now 
+# Add later - ignore now
 # - regulatory approaches
-# - Emerging:  New securities   New workflows
+# - Emerging: New securities, New workflows
