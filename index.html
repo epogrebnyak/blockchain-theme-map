@@ -173,19 +173,6 @@
 
     .card-title-group { display: flex; align-items: center; gap: 10px; min-width: 0; }
 
-    .card-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 700;
-      flex-shrink: 0;
-      color: #e2e8f0;
-    }
-
     .card-title {
       font-size: 0.9rem;
       font-weight: 600;
@@ -234,29 +221,73 @@
       gap: 5px;
     }
 
-    .item-list li {
+    .item-list li,
+    .threat-table th,
+    .threat-table td {
       font-size: 0.78rem;
+      color: #94a3b8;
+    }
+
+    .item-list li {
       background: #0f1117;
       border: 1px solid #334155;
       border-radius: 6px;
       padding: 3px 8px;
-      color: #94a3b8;
       cursor: default;
     }
 
-    .item-list li mark {
+    .threat-table-wrap {
+      margin-top: 10px;
+      overflow-x: auto;
+      border: 1px solid #334155;
+      border-radius: 10px;
+    }
+
+    .threat-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #0f1117;
+    }
+
+    .threat-table th,
+    .threat-table td {
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid #334155;
+    }
+
+    .threat-table thead th {
+      font-size: 0.72rem;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: #111827;
+    }
+
+    .threat-table tbody th {
+      width: 24%;
+      color: #e2e8f0;
+      font-weight: 600;
+    }
+
+    .threat-table tbody td { width: 38%; }
+    .threat-table tr:last-child th,
+    .threat-table tr:last-child td { border-bottom: none; }
+
+    mark {
       background: #854d0e;
       color: #fef3c7;
       border-radius: 2px;
       padding: 0 1px;
     }
 
-    .l1 .layer-badge, .l1 .card-icon { background: #1d3a5c; color: #60a5fa; }
-    .l2 .layer-badge, .l2 .card-icon { background: #2d1b5e; color: #a78bfa; }
-    .l3 .layer-badge, .l3 .card-icon { background: #164a3c; color: #34d399; }
-    .l4 .layer-badge, .l4 .card-icon { background: #3d2614; color: #fb923c; }
-    .l5 .layer-badge, .l5 .card-icon { background: #3b1d1d; color: #f87171; }
-    .l6 .layer-badge, .l6 .card-icon { background: #1f3b3d; color: #22d3ee; }
+    .l1 .layer-badge { background: #1d3a5c; color: #60a5fa; }
+    .l2 .layer-badge { background: #2d1b5e; color: #a78bfa; }
+    .l3 .layer-badge { background: #164a3c; color: #34d399; }
+    .l4 .layer-badge { background: #3d2614; color: #fb923c; }
+    .l5 .layer-badge { background: #3b1d1d; color: #f87171; }
+    .l6 .layer-badge { background: #1f3b3d; color: #22d3ee; }
 
     footer {
       text-align: center;
@@ -267,6 +298,19 @@
 
     footer a { color: #60a5fa; text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 720px) {
+      .threat-table thead { display: none; }
+      .threat-table,
+      .threat-table tbody,
+      .threat-table tr,
+      .threat-table th,
+      .threat-table td { display: block; width: 100%; }
+      .threat-table tr { border-bottom: 1px solid #334155; }
+      .threat-table tbody tr:last-child { border-bottom: none; }
+      .threat-table tbody th { border-bottom: none; padding-bottom: 2px; }
+      .threat-table tbody td { border-bottom: none; padding-top: 2px; }
+    }
   </style>
 </head>
 <body>
@@ -366,7 +410,6 @@
     </div>
   </div>
 </section>
-
 <section class="layer l2 horizontal" data-layer="2">
   <div class="layer-header">
     <span class="layer-badge">Layer 2</span>
@@ -387,7 +430,7 @@
       <div class="card-body">
         <div class="card-body-inner">
           <div class="subcategory">
-            <div class="subcategory-label">Create (new)</div>
+            <div class="subcategory-label">Create</div>
             <ul class="item-list">
               <li>Native issuance (block rewards, staking and validation)</li>
               <li>Token minting</li>
@@ -395,7 +438,7 @@
             </ul>
           </div>
           <div class="subcategory">
-            <div class="subcategory-label">Acquire (entry)</div>
+            <div class="subcategory-label">Acquire</div>
             <ul class="item-list">
               <li>At the table or P2P</li>
               <li>Broker, ATM or card</li>
@@ -403,7 +446,7 @@
             </ul>
           </div>
           <div class="subcategory">
-            <div class="subcategory-label">Exchange (secondary)</div>
+            <div class="subcategory-label">Exchange</div>
             <ul class="item-list">
               <li>Centralised exchanges (CEX)</li>
               <li>Decentralised protocols (DEX)</li>
@@ -415,7 +458,6 @@
         </div>
       </div>
     </div>
-
     <div class="card" data-category="assets">
       <div class="card-header" onclick="toggleCard(this)">
         <div class="card-title-group">
@@ -443,12 +485,11 @@
         </div>
       </div>
     </div>
-
-    <div class="card" data-category="chain-economics">
+    <div class="card" data-category="network-economics">
       <div class="card-header" onclick="toggleCard(this)">
         <div class="card-title-group">
           <div>
-            <div class="card-title">Chain economics</div>
+            <div class="card-title">Network economics</div>
             <div class="card-subtitle">Incentives</div>
           </div>
         </div>
@@ -468,7 +509,6 @@
         </div>
       </div>
     </div>
-
     <div class="card" data-category="chains-and-ecosystems">
       <div class="card-header" onclick="toggleCard(this)">
         <div class="card-title-group">
@@ -494,7 +534,6 @@
         </div>
       </div>
     </div>
-
     <div class="card" data-category="core-technology">
       <div class="card-header" onclick="toggleCard(this)">
         <div class="card-title-group">
@@ -523,28 +562,26 @@
     </div>
   </div>
 </section>
-
 <section class="layer l3" data-layer="3">
   <div class="layer-header">
     <span class="layer-badge">Layer 3</span>
-    <span class="layer-title">User Access</span>
+    <span class="layer-title">User Access and Custody</span>
   </div>
   <div class="category-grid">
-    <div class="card" data-category="access-and-custody">
+    <div class="card" data-category="wallets-and-key-management">
       <div class="card-header" onclick="toggleCard(this)">
         <div class="card-title-group">
           <div>
-            <div class="card-title">Access and custody</div>
-            <div class="card-subtitle">Access and custody</div>
+            <div class="card-title">Wallets and key management</div>
+            <div class="card-subtitle">Wallets and key management</div>
           </div>
         </div>
-        <span class="card-count">10 items</span>
+        <span class="card-count">6 items</span>
         <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="card-body">
         <div class="card-body-inner">
           <div class="subcategory">
-            <div class="subcategory-label">Wallets and key management</div>
             <ul class="item-list">
               <li>Self-custodial wallets (MetaMask, Phantom, Trust Wallet)</li>
               <li>Smart contract wallets (Safe, Argent, Sequence)</li>
@@ -554,8 +591,23 @@
               <li>Key recovery and social recovery</li>
             </ul>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-category="institutional-custody">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div>
+            <div class="card-title">Institutional custody</div>
+            <div class="card-subtitle">Institutional custody</div>
+          </div>
+        </div>
+        <span class="card-count">4 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
           <div class="subcategory">
-            <div class="subcategory-label">Institutional custody</div>
             <ul class="item-list">
               <li>MPC wallets (Fireblocks, ZenGo)</li>
               <li>Multi-sig custody solutions</li>
@@ -568,7 +620,6 @@
     </div>
   </div>
 </section>
-
 <section class="layer l4" data-layer="4">
   <div class="layer-header">
     <span class="layer-badge">Layer 4</span>
@@ -598,7 +649,6 @@
         </div>
       </div>
     </div>
-
     <div class="card" data-category="external-data">
       <div class="card-header" onclick="toggleCard(this)">
         <div class="card-title-group">
@@ -624,7 +674,6 @@
         </div>
       </div>
     </div>
-
     <div class="card" data-category="data-persistence">
       <div class="card-header" onclick="toggleCard(this)">
         <div class="card-title-group">
@@ -651,11 +700,10 @@
     </div>
   </div>
 </section>
-
 <section class="layer l5" data-layer="5">
   <div class="layer-header">
     <span class="layer-badge">Layer 5</span>
-    <span class="layer-title">Features and Protection</span>
+    <span class="layer-title" data-base-title="Features and Protection" data-count-label="categories">Features and Protection</span>
   </div>
   <div class="category-grid">
     <div class="card" data-category="privacy-and-user-protection">
@@ -684,7 +732,6 @@
         </div>
       </div>
     </div>
-
     <div class="card" data-category="system-protection">
       <div class="card-header" onclick="toggleCard(this)">
         <div class="card-title-group">
@@ -710,7 +757,6 @@
         </div>
       </div>
     </div>
-
     <div class="card" data-category="compliance">
       <div class="card-header" onclick="toggleCard(this)">
         <div class="card-title-group">
@@ -738,7 +784,6 @@
     </div>
   </div>
 </section>
-
 <section class="layer l6 horizontal" data-layer="6">
   <div class="layer-header">
     <span class="layer-badge">Layer 6</span>
@@ -753,7 +798,7 @@
             <div class="card-subtitle">Past incidents</div>
           </div>
         </div>
-        <span class="card-count">6 groups</span>
+        <span class="card-count">5 groups</span>
         <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="card-body">
@@ -762,55 +807,38 @@
             <div class="subcategory-label">CeFi failures</div>
             <ul class="item-list">
               <li>Mt. Gox (2014)</li>
-              <li>FTX (2022)</li>
-              <li>Celsius (2022)</li>
-              <li>BlockFi (2022)</li>
+              <li>FTX (2022), Celsius (2022), BlockFi (2022)</li>
             </ul>
           </div>
           <div class="subcategory">
             <div class="subcategory-label">DeFi exploits</div>
             <ul class="item-list">
-              <li>The DAO (2016) - Re-entrancy, led to Ethereum fork</li>
-              <li>Poly Network (2021) - Bridge exploit ($611M)</li>
-              <li>Ronin Bridge (2022) - Private key compromise ($625M)</li>
-              <li>Euler Finance (2023) - Flash loan attack ($197M)</li>
+              <li>The DAO (2016), Poly Network (2021), Ronin Bridge (2022), Euler Finance (2023)</li>
             </ul>
           </div>
           <div class="subcategory">
             <div class="subcategory-label">Stablecoin collapses</div>
             <ul class="item-list">
-              <li>Terra/LUNA (2022) - Algorithmic death spiral ($40B)</li>
-              <li>USDC temporary de-peg (2023) - Silicon Valley Bank exposure</li>
+              <li>Terra/LUNA (2022), USDC de-peg (2023)</li>
             </ul>
           </div>
           <div class="subcategory">
             <div class="subcategory-label">Speculative waves</div>
             <ul class="item-list">
-              <li>ICO boom (2017-2018) - Scams, retail losses, regulatory backlash</li>
-              <li>NFT bubble (2021-2022) - Wash trading, illiquidity</li>
+              <li>ICO boom (2017-2018)</li>
+              <li>NFT bubble (2021-2022)</li>
             </ul>
           </div>
           <div class="subcategory">
             <div class="subcategory-label">Regulatory actions</div>
             <ul class="item-list">
-              <li>Binance (2023-2024) - DOJ charges, regulatory settlements</li>
-              <li>Tornado Cash (2022) - OFAC sanctions on smart contracts</li>
-            </ul>
-          </div>
-          <div class="subcategory">
-            <div class="subcategory-label">Key takeaways</div>
-            <ul class="item-list">
-              <li>Centralized custody introduces counterparty risk</li>
-              <li>Bridges remain the largest attack surface</li>
-              <li>Algorithmic stability without collateral is fragile</li>
-              <li>Regulatory clarity is essential for institutional adoption</li>
-              <li>Code is law fails when governance is weak</li>
+              <li>Binance (2023-2024)</li>
+              <li>Tornado Cash (2022)</li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-
     <div class="card" data-category="persistent-threats">
       <div class="card-header" onclick="toggleCard(this)">
         <div class="card-title-group">
@@ -824,61 +852,58 @@
       </div>
       <div class="card-body">
         <div class="card-body-inner">
-          <div class="subcategory">
-            <div class="subcategory-label">Algorithmic risks</div>
-            <ul class="item-list">
-              <li>Mathematical bugs in consensus, bonding curves, or AMM formulas</li>
-              <li>Example: Terra/LUNA's death spiral was algorithmic, not a hack</li>
-            </ul>
-          </div>
-          <div class="subcategory">
-            <div class="subcategory-label">Oracle manipulation</div>
-            <ul class="item-list">
-              <li>Price feed manipulation via flash loans or low-liquidity pools</li>
-              <li>Example: Mango Markets (2022) - exploited via manipulated oracle prices</li>
-            </ul>
-          </div>
-          <div class="subcategory">
-            <div class="subcategory-label">Bridge and interoperability risks</div>
-            <ul class="item-list">
-              <li>Cross-chain messages can be spoofed or replayed</li>
-              <li>Example: Any bridge with a trusted validator set is a target</li>
-            </ul>
-          </div>
-          <div class="subcategory">
-            <div class="subcategory-label">Smart contract vulnerabilities</div>
-            <ul class="item-list">
-              <li>Re-entrancy, access control, logic bugs, upgradeability risks</li>
-              <li>Example: The DAO (2016), still relevant today</li>
-            </ul>
-          </div>
-          <div class="subcategory">
-            <div class="subcategory-label">Key management and custody risks</div>
-            <ul class="item-list">
-              <li>Private key loss, theft, or compromise</li>
-              <li>Social engineering, phishing, sim-swapping, insider threats</li>
-            </ul>
-          </div>
-          <div class="subcategory">
-            <div class="subcategory-label">Governance risks</div>
-            <ul class="item-list">
-              <li>Token-based voting can be captured by whales or attackers</li>
-              <li>Example: Aave, Compound - governance attacks remain theoretical but persistent</li>
-            </ul>
-          </div>
-          <div class="subcategory">
-            <div class="subcategory-label">Behavioral and social engineering</div>
-            <ul class="item-list">
-              <li>Honey-pots, rug pulls, fake websites, malicious browser extensions</li>
-              <li>Pump-and-dump schemes, influencer manipulation</li>
-            </ul>
-          </div>
-          <div class="subcategory">
-            <div class="subcategory-label">Systemic contagion</div>
-            <ul class="item-list">
-              <li>Concentration of stablecoin reserves in a single bank (e.g., USDC/SVB)</li>
-              <li>Interconnected leverage across DeFi protocols</li>
-            </ul>
+          <div class="threat-table-wrap">
+            <table class="threat-table">
+              <thead>
+                <tr>
+                  <th class="threat-header">Risk category</th>
+                  <th class="threat-header">Description</th>
+                  <th class="threat-header">Example or notes</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <th scope="row" class="threat-label">Algorithmic risks</th>
+                <td class="threat-description">Mathematical bugs in consensus, bonding curves, or AMM formulas</td>
+                <td class="threat-notes">Terra/LUNA's death spiral was algorithmic, not a hack</td>
+              </tr>
+              <tr>
+                <th scope="row" class="threat-label">Oracle manipulation</th>
+                <td class="threat-description">Price feed manipulation via flash loans or low-liquidity pools</td>
+                <td class="threat-notes">Mango Markets (2022) - exploited via manipulated oracle prices</td>
+              </tr>
+              <tr>
+                <th scope="row" class="threat-label">Bridge and interoperability risks</th>
+                <td class="threat-description">Cross-chain messages can be spoofed or replayed</td>
+                <td class="threat-notes">Any bridge with a trusted validator set is a target</td>
+              </tr>
+              <tr>
+                <th scope="row" class="threat-label">Smart contract vulnerabilities</th>
+                <td class="threat-description">Re-entrancy, access control, logic bugs, upgradeability risks</td>
+                <td class="threat-notes">The DAO (2016), still relevant today</td>
+              </tr>
+              <tr>
+                <th scope="row" class="threat-label">Key management and custody risks</th>
+                <td class="threat-description">Private key loss, theft, or compromise</td>
+                <td class="threat-notes">Social engineering, phishing, sim-swapping, insider threats</td>
+              </tr>
+              <tr>
+                <th scope="row" class="threat-label">Governance risks</th>
+                <td class="threat-description">Token-based voting can be captured by whales or attackers</td>
+                <td class="threat-notes">Aave, Compound - governance attacks remain theoretical but persistent</td>
+              </tr>
+              <tr>
+                <th scope="row" class="threat-label">Behavioral and social engineering</th>
+                <td class="threat-description">Honey-pots, rug pulls, fake websites, malicious browser extensions</td>
+                <td class="threat-notes">Pump-and-dump schemes, influencer manipulation</td>
+              </tr>
+              <tr>
+                <th scope="row" class="threat-label">Systemic contagion</th>
+                <td class="threat-description">Concentration of stablecoin reserves in a single bank (e.g., USDC/SVB)</td>
+                <td class="threat-notes">Interconnected leverage across DeFi protocols</td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -908,12 +933,32 @@
     setCardOpen(card, !card.classList.contains('open'));
   }
 
+  function resetHighlights(card) {
+    card.querySelectorAll('mark').forEach(mark => {
+      mark.replaceWith(document.createTextNode(mark.textContent));
+    });
+  }
+
+  function highlightElement(element, query) {
+    if (!element) return;
+    const text = element.textContent;
+    if (!text.toLowerCase().includes(query)) return;
+    element.innerHTML = text.replace(new RegExp(`(${escapeRegex(query)})`, 'gi'), '<mark>$1</mark>');
+  }
+
   document.getElementById('expand-all').addEventListener('click', () => {
     document.querySelectorAll('.card:not([data-hidden="true"])').forEach(card => setCardOpen(card, true));
   });
 
   document.getElementById('collapse-all').addEventListener('click', () => {
     document.querySelectorAll('.card').forEach(card => setCardOpen(card, false));
+  });
+
+  document.querySelectorAll('.layer-title[data-base-title]').forEach(title => {
+    const section = title.closest('.layer');
+    const count = section ? section.querySelectorAll('.card').length : 0;
+    const label = title.dataset.countLabel || 'items';
+    title.textContent = `${title.dataset.baseTitle} (${count} ${label})`;
   });
 
   const searchInput = document.getElementById('search');
@@ -924,9 +969,7 @@
     let visibleCount = 0;
 
     document.querySelectorAll('.card').forEach(card => {
-      card.querySelectorAll('mark').forEach(m => {
-        m.outerHTML = m.textContent;
-      });
+      resetHighlights(card);
 
       if (!query) {
         card.removeAttribute('data-hidden');
@@ -935,24 +978,13 @@
         return;
       }
 
-      const titleEl = card.querySelector('.card-title');
-      const subtitleEl = card.querySelector('.card-subtitle');
-      const itemEls = card.querySelectorAll('.item-list li');
-      const subLabels = card.querySelectorAll('.subcategory-label');
-
-      const titleText = (titleEl?.textContent || '').toLowerCase();
-      const subtitleText = (subtitleEl?.textContent || '').toLowerCase();
-      const itemsText = Array.from(itemEls).map(li => li.textContent.toLowerCase()).join(' ');
-      const labelsText = Array.from(subLabels).map(s => s.textContent.toLowerCase()).join(' ');
-      const fullText = titleText + ' ' + subtitleText + ' ' + itemsText + ' ' + labelsText;
+      const fullText = card.textContent.toLowerCase();
 
       if (fullText.includes(query)) {
         card.removeAttribute('data-hidden');
         setCardOpen(card, true);
-        itemEls.forEach(li => {
-          if (li.textContent.toLowerCase().includes(query)) {
-            li.innerHTML = li.textContent.replace(new RegExp(`(${escapeRegex(query)})`, 'gi'), '<mark>$1</mark>');
-          }
+        card.querySelectorAll('.card-title, .card-subtitle, .subcategory-label, .item-list li, .threat-label, .threat-description, .threat-notes, .threat-header').forEach(element => {
+          highlightElement(element, query);
         });
         visibleCount++;
       } else {
