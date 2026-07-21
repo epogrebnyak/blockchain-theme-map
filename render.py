@@ -77,16 +77,16 @@ def parse_rows(payload: dict[str, Any]) -> list[dict[str, str]]:
 
 
 def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, Any]:
-    orientation = payload.get("_orientation", "vertical")
+    orientation = payload.get("_orientation")
     if not isinstance(orientation, str) or orientation not in VALID_ORIENTATIONS:
         orientation = "vertical"
-    show_subtitle = subtitle != title
+    has_distinct_subtitle = subtitle != title
 
     if orientation == "table":
         return {
             "title": title,
             "subtitle": subtitle,
-            "show_subtitle": show_subtitle,
+            "show_subtitle": has_distinct_subtitle,
             "orientation": orientation,
             "layout": "table",
             "rows": parse_rows(payload),
@@ -96,7 +96,7 @@ def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, 
         return {
             "title": title,
             "subtitle": subtitle,
-            "show_subtitle": show_subtitle,
+            "show_subtitle": has_distinct_subtitle,
             "orientation": orientation,
             "layout": "list",
             "items": payload["items"],
@@ -105,7 +105,7 @@ def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, 
     return {
         "title": title,
         "subtitle": subtitle,
-        "show_subtitle": show_subtitle,
+        "show_subtitle": has_distinct_subtitle,
         "orientation": orientation,
         "layout": "blocks",
         "blocks": parse_blocks(payload),
