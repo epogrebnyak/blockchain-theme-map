@@ -1,0 +1,28 @@
+Privacy and protection:
+  _orientation: vertical
+  items:
+    - Zero-knowledge proofs (ZK-SNARKs, ZK-STARKs)
+    - Stealth addresses
+    - Confidential transactions (hidden amounts)
+    - Private voting
+    - Encrypted metadata
+    - Selective disclosure (ZK-based KYC/age verification)
+
+Contract security:
+  _orientation: vertical
+  items:
+    - Smart contract audits
+    - Multi-sig and custody
+    - Bug bounties
+    - Formal verification
+    - MEV protection
+
+Compliance:
+  _orientation: vertical
+  items:
+    - KYC and AML
+    - Sanctions screening
+    - Transfer restrictions
+    - Travel rule
+    - Reporting and tax
+
