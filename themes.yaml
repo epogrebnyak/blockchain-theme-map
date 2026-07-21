@@ -10,11 +10,11 @@
 
 
 # ============================================
-# LAYER 1. USE CASES
+# GROUP 1. USE CASES
 # ============================================
 #  Card orientation: these cards are horizontal and occupy full screen width
 
-# 1. What users need blockchain for?
+# Card 1. What users need blockchain for?
 
 Use cases:
 
@@ -57,7 +57,7 @@ Use cases:
 # ============================================
 #  Card orientation: these cards are horizontal and occupy full screen width
 
-# 2. On-chain activity
+# Card 2. Transactions
 
 Transactions:
   Create:
@@ -77,7 +77,7 @@ Transactions:
    - Solvers and intent-based execution
    - Cross-chain bridges
 
-# 3. Assets
+# Card 3. Assets
 Assets and contract types:
    - Native currency (BTC, ETH, SOL)
    - Stablecoins (USDC, USDT, DAI, USDe)
@@ -87,14 +87,14 @@ Assets and contract types:
    - Soulbound tokens (non-transferable)
    - Off-chain data (oracles, storage proofs)
 
-# 4. Network economics
+# Card 4. Network economics
 Incentives:
    - Fee models (gas and priority fees)
    - MEV (order flow, arbitrage and liquidations)
    - Staking yields and rewards
    - Token supply and burn
 
-# 5. Chains and ecosystems
+# Card 5. Chains and ecosystems
 Networks:
    - Bitcoin (BTC)
    - Ethereum (ETH)
@@ -102,7 +102,7 @@ Networks:
    - Alternative L1s (BNB, Solana, Tron)
    - Private and consortium chains
 
-# 6. Core technology
+# Card 6. Core technology
 Foundations:
    - Cryptography (hashing, digital signatures and Merkle trees)
    - Address space and block data structures
@@ -115,7 +115,7 @@ Foundations:
 # LAYER 3. USER ACCESS AND CUSTODY 
 # ============================================	
 
-# 7. Wallets and key management
+# Card 7. Wallets and key management
 Wallets and key management:
    - Self-custodial wallets (MetaMask, Phantom, Trust Wallet)
    - Smart contract wallets (Safe, Argent, Sequence)
@@ -124,7 +124,7 @@ Wallets and key management:
    - Hardware wallets (Ledger, Trezor)
    - Key recovery and social recovery
 
-# 8. Institutional custody
+# Card 8. Institutional custody
 Institutional custody:
    - MPC wallets (Fireblocks, ZenGo)
    - Multi-sig custody solutions
@@ -135,13 +135,13 @@ Institutional custody:
 # LAYER 4. NETWORK ENHANCEMENTS 
 # ============================================	
 
-# 9. Cross-network communication
+# Card 9. Cross-network communication
 Interoperability:
    - Bridges
    - Cross-chain messaging
    - Light clients
 
-# 10. External data
+# Card 10. External data
 Oracles and data feeds:
    - Price feeds (Chainlink)
    - Randomness
@@ -149,7 +149,7 @@ Oracles and data feeds:
    - Real-world event data (sports, weather and elections)
    - Data aggregation and verification
 
-# 11. Data persistence
+# Card 11. Data persistence
 Storage:
    - On-chain storage (state and balances)
    - Off-chain storage (IPFS, Arweave and Filecoin)
@@ -160,7 +160,7 @@ Storage:
 # LAYER 5. FEATURES AND PROTECTION (3 categories)
 # ============================================
 
-# 12. Privacy and user protection
+# Card 12. Privacy and user protection
 Privacy and user protection:
    - Zero-knowledge proofs (ZK-SNARKs and ZK-STARKs)
    - Stealth addresses
@@ -169,7 +169,7 @@ Privacy and user protection:
    - Encrypted metadata
    - Selective disclosure (ZK-based KYC/age verification)
 
-# 13. System protection
+# Card 13. System protection
 Contract security:
    - Smart contract audits
    - Multi-sig and custody
@@ -177,7 +177,7 @@ Contract security:
    - Formal verification
    - MEV protection
 
-# 14. Compliance
+# Card 14. Compliance
 Compliance:
    - KYC and AML
    - Sanctions screening
@@ -191,7 +191,7 @@ Compliance:
 #======================================================
 #  This cards are horizontal and occupy full width
 
-# 15. Lessons learned
+# Card 15. Lessons learned
 Past incidents:
 
   - CeFi failures: 
@@ -206,10 +206,9 @@ Past incidents:
     - Binance (2023-2024)
     - Tornado Cash (2022)
 	
-# 16. Persistent threats
+# Card  16. Persistent threats
 Risk categories:
-# For this category create a thrreee-column table
-
+# For this category create a three-column table
 
   - Algorithmic risks:
     - Mathematical bugs in consensus, bonding curves, or AMM formulas
