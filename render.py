@@ -80,13 +80,13 @@ def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, 
     orientation = payload.get("_orientation")
     if not isinstance(orientation, str) or orientation not in VALID_ORIENTATIONS:
         orientation = "vertical"
-    has_distinct_subtitle = subtitle != title
+    should_show_subtitle = subtitle != title
 
     if orientation == "table":
         return {
             "title": title,
             "subtitle": subtitle,
-            "show_subtitle": has_distinct_subtitle,
+            "show_subtitle": should_show_subtitle,
             "orientation": orientation,
             "layout": "table",
             "rows": parse_rows(payload),
@@ -96,7 +96,7 @@ def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, 
         return {
             "title": title,
             "subtitle": subtitle,
-            "show_subtitle": has_distinct_subtitle,
+            "show_subtitle": should_show_subtitle,
             "orientation": orientation,
             "layout": "list",
             "items": payload["items"],
@@ -105,7 +105,7 @@ def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, 
     return {
         "title": title,
         "subtitle": subtitle,
-        "show_subtitle": has_distinct_subtitle,
+        "show_subtitle": should_show_subtitle,
         "orientation": orientation,
         "layout": "blocks",
         "blocks": parse_blocks(payload),
@@ -118,6 +118,7 @@ def extract_meta(text: str, pattern: str, fallback: str) -> str:
 
 
 def parse_outline(source_text: str) -> tuple[OrderedDict[str, str], dict[str, dict[str, str]]]:
+    """Parse comment headers in themes.yaml into group metadata and card mappings."""
     group_pattern = re.compile(r"^#\s*(?:GROUP|LAYER)\s+(?:\d+\.\s+)?(.+?)\s*$")
     subtitle_pattern = re.compile(r"^#\s*Subtitle:\s*(.+?)\s*$")
     card_pattern = re.compile(r"^#\s*Card\s+\d+\.\s*(.+?)\s*$")
@@ -125,6 +126,7 @@ def parse_outline(source_text: str) -> tuple[OrderedDict[str, str], dict[str, di
 
     group_meta: OrderedDict[str, str] = OrderedDict()
     cards_by_subtitle: dict[str, dict[str, str]] = {}
+    # Fallback bucket used for cards when no explicit group header is parsed yet.
     current_group = DEFAULT_GROUP
     pending_card_title: str | None = None
 
