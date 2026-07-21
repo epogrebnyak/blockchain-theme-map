@@ -119,6 +119,10 @@ def extract_meta(text: str, pattern: str, fallback: str) -> str:
 
 def parse_outline(source_text: str) -> tuple[OrderedDict[str, str], dict[str, dict[str, str]]]:
     """Parse comment headers in themes.yaml into group metadata and card mappings."""
+    # Expected group header examples:
+    #   # GROUP 1. USE CASES
+    #   # LAYER 2. MINIMAL BLOCKCHAIN
+    # Captured group title is the trailing text after optional numbering.
     group_pattern = re.compile(r"^#\s*(?:GROUP|LAYER)\s+(?:\d+\.\s+)?(.+?)\s*$")
     subtitle_pattern = re.compile(r"^#\s*Subtitle:\s*(.+?)\s*$")
     card_pattern = re.compile(r"^#\s*Card\s+\d+\.\s*(.+?)\s*$")
@@ -141,6 +145,7 @@ def parse_outline(source_text: str) -> tuple[OrderedDict[str, str], dict[str, di
 
         if not pending_card_title:
             subtitle_match = subtitle_pattern.match(line)
+            # Store one subtitle per group; repeated subtitle comments are ignored.
             if subtitle_match and current_group in group_meta and not group_meta[current_group]:
                 group_meta[current_group] = subtitle_match.group(1).strip()
                 continue
@@ -174,6 +179,7 @@ def build_context(data: dict[str, Any], source_text: str) -> dict[str, Any]:
             continue
 
         card_meta = cards_by_subtitle.get(subtitle, {})
+        # Cards without explicit preceding group headers are assigned to DEFAULT_GROUP.
         group_title = card_meta.get("group", DEFAULT_GROUP)
         card_title = card_meta.get("title", subtitle)
 
