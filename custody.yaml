@@ -1,0 +1,17 @@
+Wallets and key management:
+  _orientation: vertical
+  items:
+    - Self-custodial wallets (MetaMask, Phantom, Trust Wallet)
+    - Smart contract wallets (Safe, Argent, Sequence)
+    - Account abstraction (ERC-4337, ERC-7579)
+    - Paymasters (gas abstraction, sponsored transactions)
+    - Hardware wallets (Ledger, Trezor)
+    - Key recovery and social recovery
+
+Institutional custody:
+  _orientation: vertical
+  items:
+    - MPC wallets (Fireblocks, ZenGo)
+    - Multi-sig custody solutions
+    - Qualified custodians (Coinbase Custody, BitGo)
+    - Prime brokerage and settlement
