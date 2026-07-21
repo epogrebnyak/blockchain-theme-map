@@ -112,10 +112,10 @@ Foundations:
    - API and user interface, account and wallet abstraction 
 
 # ============================================
-# LAYER 3. USER ACCESS 
+# LAYER 3. USER ACCESS AND CUSTODY 
 # ============================================	
 
-# 7. Access and custody
+# 7. Wallets and key management
 Wallets and key management:
    - Self-custodial wallets (MetaMask, Phantom, Trust Wallet)
    - Smart contract wallets (Safe, Argent, Sequence)
@@ -124,6 +124,7 @@ Wallets and key management:
    - Hardware wallets (Ledger, Trezor)
    - Key recovery and social recovery
 
+# 8. Institutional custody
 Institutional custody:
    - MPC wallets (Fireblocks, ZenGo)
    - Multi-sig custody solutions
@@ -134,13 +135,13 @@ Institutional custody:
 # LAYER 4. NETWORK ENHANCEMENTS 
 # ============================================	
 
-# 8. Cross-network communication
+# 9. Cross-network communication
 Interoperability:
    - Bridges
    - Cross-chain messaging
    - Light clients
 
-# 9. External data
+# 10. External data
 Oracles and data feeds:
    - Price feeds (Chainlink)
    - Randomness
@@ -148,7 +149,7 @@ Oracles and data feeds:
    - Real-world event data (sports, weather and elections)
    - Data aggregation and verification
 
-# 10. Data persistence
+# 11. Data persistence
 Storage:
    - On-chain storage (state and balances)
    - Off-chain storage (IPFS, Arweave and Filecoin)
@@ -159,7 +160,7 @@ Storage:
 # LAYER 5. FEATURES AND PROTECTION (3 categories)
 # ============================================
 
-# 11. Privacy and user protection
+# 12. Privacy and user protection
 Privacy and user protection:
    - Zero-knowledge proofs (ZK-SNARKs and ZK-STARKs)
    - Stealth addresses
@@ -168,7 +169,7 @@ Privacy and user protection:
    - Encrypted metadata
    - Selective disclosure (ZK-based KYC/age verification)
 
-# 12. System protection
+# 13. System protection
 Contract security:
    - Smart contract audits
    - Multi-sig and custody
@@ -176,7 +177,7 @@ Contract security:
    - Formal verification
    - MEV protection
 
-# 13. Compliance
+# 14. Compliance
 Compliance:
    - KYC and AML
    - Sanctions screening
@@ -190,33 +191,25 @@ Compliance:
 #======================================================
 #  This cards are horizontal and occupy full width
 
-# 14. Lessons learned
+# 15. Lessons learned
 Past incidents:
 
-  - CeFi failures: Mt. Gox (2014), FTX (2022), Celsius (2022), BlockFi (2022)
-  - DeFi exploits:
-    - The DAO (2016) - Re-entrancy, led to Ethereum fork
-    - Poly Network (2021) - Bridge exploit ($611M)
-    - Ronin Bridge (2022) - Private key compromise ($625M)
-    - Euler Finance (2023) - Flash loan attack ($197M)
-  - Stablecoin collapses:
-    - Terra/LUNA (2022) - Algorithmic death spiral ($40B)
-    - USDC temporary de-peg (2023) - Silicon Valley Bank exposure
-  - Speculative waves:
-    - ICO boom (2017-2018) - Scams, retail losses, regulatory backlash
-    - NFT bubble (2021-2022) - Wash trading, illiquidity
+  - CeFi failures: 
+     - Mt. Gox (2014)
+	 - TX (2022), Celsius (2022), BlockFi (2022)
+  - DeFi exploits: The DAO (2016), Poly Network (2021), Ronin Bridge (2022), Euler Finance (2023)
+  - Stablecoin collapses: Terra/LUNA (2022), USDC de-peg (2023)
+  - Speculative waves: 
+     - ICO boom (2017-2018)
+	 - NFT bubble (2021-2022)
   - Regulatory actions:
-    - Binance (2023-2024) - DOJ charges, regulatory settlements
-    - Tornado Cash (2022) - OFAC sanctions on smart contracts
-  - Key takeaways:
-    - Centralized custody introduces counterparty risk
-    - Bridges remain the largest attack surface
-    - Algorithmic stability without collateral is fragile
-    - Regulatory clarity is essential for institutional adoption
-    - "Code is law" fails when governance is weak
+    - Binance (2023-2024)
+    - Tornado Cash (2022)
 	
-# 15. Persistent threats
+# 16. Persistent threats
 Risk categories:
+# For this category create a thrreee-column table
+
 
   - Algorithmic risks:
     - Mathematical bugs in consensus, bonding curves, or AMM formulas
