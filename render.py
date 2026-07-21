@@ -10,6 +10,9 @@ from typing import Any
 import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+DEFAULT_GROUP = "Themes"
+
+
 def to_lines(value: Any) -> list[str]:
     if isinstance(value, str):
         return [value]
@@ -73,12 +76,15 @@ def parse_rows(payload: dict[str, Any]) -> list[dict[str, str]]:
 
 
 def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, Any]:
-    orientation = str(payload.get("_orientation", "vertical"))
+    orientation = payload.get("_orientation", "vertical")
+    if not isinstance(orientation, str):
+        orientation = "vertical"
 
     if orientation == "table":
         return {
             "title": title,
             "subtitle": subtitle,
+            "show_subtitle": subtitle != title,
             "orientation": orientation,
             "layout": "table",
             "rows": parse_rows(payload),
@@ -88,6 +94,7 @@ def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, 
         return {
             "title": title,
             "subtitle": subtitle,
+            "show_subtitle": subtitle != title,
             "orientation": orientation,
             "layout": "list",
             "items": payload["items"],
@@ -96,6 +103,7 @@ def parse_card(title: str, subtitle: str, payload: dict[str, Any]) -> dict[str, 
     return {
         "title": title,
         "subtitle": subtitle,
+        "show_subtitle": subtitle != title,
         "orientation": orientation,
         "layout": "blocks",
         "blocks": parse_blocks(payload),
@@ -118,7 +126,7 @@ def parse_outline(source_text: str) -> tuple[list[str], dict[str, dict[str, str]
 
     group_order: list[str] = []
     cards_by_subtitle: dict[str, dict[str, str]] = {}
-    current_group = "Themes"
+    current_group = DEFAULT_GROUP
     pending_card_title: str | None = None
 
     for line in source_text.splitlines():
@@ -143,7 +151,7 @@ def parse_outline(source_text: str) -> tuple[list[str], dict[str, dict[str, str]
                 pending_card_title = None
 
     if not group_order:
-        group_order.append("Themes")
+        group_order.append(DEFAULT_GROUP)
 
     return group_order, cards_by_subtitle
 
@@ -159,7 +167,7 @@ def build_context(data: dict[str, Any], source_text: str) -> dict[str, Any]:
             continue
 
         card_meta = cards_by_subtitle.get(subtitle, {})
-        group_title = card_meta.get("group", "Themes")
+        group_title = card_meta.get("group", DEFAULT_GROUP)
         card_title = card_meta.get("title", subtitle)
 
         if group_title not in groups_map:

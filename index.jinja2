@@ -118,7 +118,7 @@
           {% for card in group.cards %}
           <article class="card{% if card.orientation == 'horizontal' %} card-wide{% endif %}">
             <h3>{{ card.title }}</h3>
-            {% if card.subtitle != card.title %}<p class="card-subtitle">{{ card.subtitle }}</p>{% endif %}
+            {% if card.show_subtitle %}<p class="card-subtitle">{{ card.subtitle }}</p>{% endif %}
 
             {% if card.layout == 'blocks' %}
             <div class="content-grid">
