@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blockchain &amp; Digital Assets Theme Map</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 24px 16px 48px;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p {
+      margin-top: 6px;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    /* ── Search ── */
+    .search-wrap {
+      max-width: 480px;
+      margin: 0 auto 36px;
+      position: relative;
+    }
+    .search-wrap input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-wrap input:focus { border-color: #60a5fa; }
+    .search-wrap svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      pointer-events: none;
+    }
+    #no-results {
+      text-align: center;
+      color: #64748b;
+      font-size: 0.9rem;
+      margin-top: 32px;
+      display: none;
+    }
+
+    /* ── Layer ── */
+    .layer {
+      max-width: 1100px;
+      margin: 0 auto 36px;
+    }
+    .layer-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .layer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .layer-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+
+    /* ── Category grid ── */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { border-color: #475569; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+    .card[data-hidden="true"] { display: none; }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+      gap: 8px;
+    }
+    .card-header:hover { background: #263348; }
+    .card-title-group { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .card-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-subtitle {
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+    .card-count {
+      font-size: 0.7rem;
+      color: #64748b;
+      background: #0f1117;
+      padding: 2px 7px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .chevron {
+      flex-shrink: 0;
+      color: #64748b;
+      transition: transform 0.25s;
+    }
+    .card.open .chevron { transform: rotate(180deg); }
+
+    /* ── Card body ── */
+    .card-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .card.open .card-body { max-height: 1000px; }
+
+    .card-body-inner { padding: 0 16px 14px; }
+
+    .subcategory {
+      margin-top: 10px;
+    }
+    .subcategory-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+    .item-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .item-list li {
+      font-size: 0.78rem;
+      background: #0f1117;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 3px 8px;
+      color: #94a3b8;
+      transition: background 0.15s, color 0.15s;
+      cursor: default;
+    }
+    .item-list li:hover { background: #1e293b; color: #e2e8f0; }
+    .item-list li mark {
+      background: #854d0e;
+      color: #fef3c7;
+      border-radius: 2px;
+      padding: 0 1px;
+    }
+
+    /* ── Layer accent colours ── */
+    .l1 .layer-badge { background: #1d3a5c; color: #60a5fa; }
+    .l1 .card-icon    { background: #1d3a5c; }
+
+    .l2 .layer-badge { background: #2d1b5e; color: #a78bfa; }
+    .l2 .card-icon    { background: #2d1b5e; }
+
+    .l3 .layer-badge { background: #164a3c; color: #34d399; }
+    .l3 .card-icon    { background: #164a3c; }
+
+    .l4 .layer-badge { background: #3d2614; color: #fb923c; }
+    .l4 .card-icon    { background: #3d2614; }
+
+    .l5 .layer-badge { background: #3b1d1d; color: #f87171; }
+    .l5 .card-icon    { background: #3b1d1d; }
+
+    .expand-all-row {
+      max-width: 1100px;
+      margin: 0 auto 20px;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+    .btn-text {
+      background: none;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: #94a3b8;
+      font-size: 0.8rem;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-text:hover { background: #1e293b; color: #e2e8f0; }
+
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      color: #475569;
+      font-size: 0.78rem;
+    }
+    footer a { color: #60a5fa; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>⛓ Blockchain &amp; Digital Assets Theme Map</h1>
+  <p>Click any category to explore its topics</p>
+</header>
+
+<div class="search-wrap">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>
+  <input type="text" id="search" placeholder="Search topics, categories…" autocomplete="off" />
+</div>
+
+<div class="expand-all-row">
+  <button class="btn-text" id="expand-all">Expand all</button>
+  <button class="btn-text" id="collapse-all">Collapse all</button>
+</div>
+
+<div id="no-results">No matching topics found.</div>
+
+<!-- ────────────────────────────────────────────── -->
+<!-- LAYER 1 – MINIMAL SET                         -->
+<!-- ────────────────────────────────────────────── -->
+<section class="layer l1" data-layer="1">
+  <div class="layer-header">
+    <span class="layer-badge">⬡ Layer 1 · Minimal Set</span>
+    <span class="layer-title">Foundational concepts &amp; workflows</span>
+  </div>
+  <div class="category-grid">
+
+    <div class="card" data-category="use-cases">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">🎯</div>
+          <div>
+            <div class="card-title">End-User Workflows</div>
+            <div class="card-subtitle">Use cases</div>
+          </div>
+        </div>
+        <span class="card-count">20 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <div class="subcategory-label">Speculative</div>
+            <ul class="item-list">
+              <li>Trading BTC</li><li>Memecoins</li><li>Prediction markets</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Institutional Finance (CeFi)</div>
+            <ul class="item-list">
+              <li>Payments (Visa, Stripe)</li><li>Exchange trading (Coinbase, Kraken)</li>
+              <li>Custody &amp; prime brokerage</li><li>RWA issuance &amp; trading</li>
+              <li>Derivatives (CME, regulated futures)</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Decentralised Finance (DeFi)</div>
+            <ul class="item-list">
+              <li>Staking (Lido, Rocket Pool)</li><li>Collateralised lending (Aave, Compound)</li>
+              <li>Exchange/AMM (Uniswap, Curve)</li><li>Derivatives (dYdX, GMX, perpetuals)</li>
+              <li>RWA protocols (MakerDAO, Centrifuge)</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Physical</div>
+            <ul class="item-list">
+              <li>Wireless networks (Helium)</li><li>Storage (Filecoin, Arweave)</li>
+              <li>Compute (Render, Akash)</li><li>Supply chain &amp; provenance</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Social &amp; Governance</div>
+            <ul class="item-list">
+              <li>Identity</li><li>Reputation &amp; credentials</li><li>Voting rights, DAOs</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Entertainment</div>
+            <ul class="item-list"><li>Gaming</li><li>Collectibles</li></ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Emerging</div>
+            <ul class="item-list"><li>New securities</li><li>New workflows</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="transactions">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">🔄</div>
+          <div>
+            <div class="card-title">On-Chain Activity Flow</div>
+            <div class="card-subtitle">Transactions</div>
+          </div>
+        </div>
+        <span class="card-count">10 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <div class="subcategory-label">Create (new)</div>
+            <ul class="item-list">
+              <li>Native issuance (block rewards, staking)</li><li>Token minting</li><li>Airdrops &amp; rewards</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Acquire (entry)</div>
+            <ul class="item-list">
+              <li>At the table &amp; P2P</li><li>Fiat on-ramp (broker, ATM &amp; card)</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Exchange (secondary)</div>
+            <ul class="item-list">
+              <li>Centralised exchanges (CEX)</li><li>Decentralised protocols (DEX)</li>
+              <li>Aggregators</li><li>Solvers &amp; intent-based execution</li><li>Cross-chain bridges</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="assets">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">🪙</div>
+          <div>
+            <div class="card-title">Asset Types</div>
+            <div class="card-subtitle">Assets &amp; contract types</div>
+          </div>
+        </div>
+        <span class="card-count">7 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>Native currency (BTC, ETH, SOL)</li><li>Stablecoins (USDC, USDT, DAI, USDe)</li>
+              <li>Other fungible tokens (ERC-20, SPL)</li><li>Non-fungible tokens (NFTs)</li>
+              <li>Semi-fungible tokens</li><li>Soulbound tokens (non-transferable)</li>
+              <li>Off-chain data (oracles, storage proofs)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="incentives">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">💰</div>
+          <div>
+            <div class="card-title">Economic Models</div>
+            <div class="card-subtitle">Incentives</div>
+          </div>
+        </div>
+        <span class="card-count">4 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>Fee models (gas &amp; priority fees)</li>
+              <li>MEV (order flow, arbitrage &amp; liquidations)</li>
+              <li>Staking yields &amp; rewards</li>
+              <li>Token supply &amp; burn</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="networks">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">🌐</div>
+          <div>
+            <div class="card-title">Networks</div>
+            <div class="card-subtitle">Blockchain networks</div>
+          </div>
+        </div>
+        <span class="card-count">5 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>Bitcoin (BTC)</li><li>Ethereum (ETH)</li>
+              <li>L2 &amp; L3 Rollups</li><li>Alternative L1s (BNB, Solana, Tron)</li>
+              <li>Private &amp; consortium chains</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="foundations">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">⚙️</div>
+          <div>
+            <div class="card-title">Core Technology</div>
+            <div class="card-subtitle">Foundations</div>
+          </div>
+        </div>
+        <span class="card-count">7 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>Cryptography (hashing, signatures &amp; Merkle trees)</li>
+              <li>Address space &amp; block data structures</li>
+              <li>Peer-to-peer networking (node discovery &amp; gossip)</li>
+              <li>Consensus mechanisms (participants, rules &amp; guarantees)</li>
+              <li>Execution environments (VMs &amp; state transitions)</li>
+              <li>API &amp; user interface</li>
+              <li>Account &amp; wallet abstraction (ERC-4337, ERC-7579, paymasters)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────── -->
+<!-- LAYER 2 – USER ACCESS                         -->
+<!-- ────────────────────────────────────────────── -->
+<section class="layer l2" data-layer="2">
+  <div class="layer-header">
+    <span class="layer-badge">🔑 Layer 2 · User Access</span>
+    <span class="layer-title">Wallets, keys &amp; custody</span>
+  </div>
+  <div class="category-grid">
+
+    <div class="card" data-category="wallets">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">👛</div>
+          <div>
+            <div class="card-title">Wallets &amp; Key Management</div>
+            <div class="card-subtitle">Access &amp; custody</div>
+          </div>
+        </div>
+        <span class="card-count">6 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>Self-custodial wallets (MetaMask, Phantom, Trust Wallet)</li>
+              <li>Smart contract wallets (Safe, Argent, Sequence)</li>
+              <li>Account abstraction (ERC-4337, ERC-7579)</li>
+              <li>Paymasters (gas abstraction, sponsored transactions)</li>
+              <li>Hardware wallets (Ledger, Trezor)</li>
+              <li>Key recovery &amp; social recovery</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="institutional-custody">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">🏦</div>
+          <div>
+            <div class="card-title">Institutional Custody</div>
+            <div class="card-subtitle">Enterprise-grade solutions</div>
+          </div>
+        </div>
+        <span class="card-count">4 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>MPC wallets (Fireblocks, ZenGo)</li>
+              <li>Multi-sig custody solutions</li>
+              <li>Qualified custodians (Coinbase Custody, BitGo)</li>
+              <li>Prime brokerage &amp; settlement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────── -->
+<!-- LAYER 3 – NETWORK ENHANCEMENTS                -->
+<!-- ────────────────────────────────────────────── -->
+<section class="layer l3" data-layer="3">
+  <div class="layer-header">
+    <span class="layer-badge">🔗 Layer 3 · Network Enhancements</span>
+    <span class="layer-title">Interoperability, oracles &amp; storage</span>
+  </div>
+  <div class="category-grid">
+
+    <div class="card" data-category="interoperability">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">🌉</div>
+          <div>
+            <div class="card-title">Cross-Network Communication</div>
+            <div class="card-subtitle">Interoperability</div>
+          </div>
+        </div>
+        <span class="card-count">3 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>Bridges</li><li>Cross-chain messaging</li><li>Light clients</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="oracles">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">📡</div>
+          <div>
+            <div class="card-title">External Data</div>
+            <div class="card-subtitle">Oracles &amp; data feeds</div>
+          </div>
+        </div>
+        <span class="card-count">5 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>Price feeds (Chainlink)</li><li>Randomness</li>
+              <li>Cross-chain data</li>
+              <li>Real-world event data (sports, weather &amp; elections)</li>
+              <li>Data aggregation &amp; verification</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="storage">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">🗄️</div>
+          <div>
+            <div class="card-title">Data Persistence</div>
+            <div class="card-subtitle">Storage</div>
+          </div>
+        </div>
+        <span class="card-count">4 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>On-chain storage (state &amp; balances)</li>
+              <li>Off-chain storage (IPFS, Arweave &amp; Filecoin)</li>
+              <li>Data availability layers (Celestia &amp; EigenDA)</li>
+              <li>Decentralized databases (Ceramic &amp; OrbitDB)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────── -->
+<!-- LAYER 4 – FEATURES AND PROTECTION             -->
+<!-- ────────────────────────────────────────────── -->
+<section class="layer l4" data-layer="4">
+  <div class="layer-header">
+    <span class="layer-badge">🛡 Layer 4 · Features &amp; Protection</span>
+    <span class="layer-title">Privacy, security &amp; compliance</span>
+  </div>
+  <div class="category-grid">
+
+    <div class="card" data-category="privacy">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">🔒</div>
+          <div>
+            <div class="card-title">Privacy &amp; User Protection</div>
+            <div class="card-subtitle">Zero-knowledge &amp; confidentiality</div>
+          </div>
+        </div>
+        <span class="card-count">6 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>Zero-knowledge proofs (ZK-SNARKs &amp; ZK-STARKs)</li>
+              <li>Stealth addresses</li>
+              <li>Confidential transactions (hidden amounts)</li>
+              <li>Private voting</li>
+              <li>Encrypted metadata</li>
+              <li>Selective disclosure (ZK-based KYC / age verification)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="contract-security">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">🔐</div>
+          <div>
+            <div class="card-title">System Protection</div>
+            <div class="card-subtitle">Contract security</div>
+          </div>
+        </div>
+        <span class="card-count">5 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>Smart contract audits</li><li>Multi-sig &amp; custody</li>
+              <li>Bug bounties</li><li>Formal verification</li><li>MEV protection</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="compliance">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">📋</div>
+          <div>
+            <div class="card-title">Compliance</div>
+            <div class="card-subtitle">Regulatory &amp; reporting</div>
+          </div>
+        </div>
+        <span class="card-count">5 items</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>KYC &amp; AML</li><li>Sanctions screening</li>
+              <li>Transfer restrictions</li><li>Travel rule</li><li>Reporting &amp; tax</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────── -->
+<!-- LAYER 5 – RISK MANAGEMENT                     -->
+<!-- ────────────────────────────────────────────── -->
+<section class="layer l5" data-layer="5">
+  <div class="layer-header">
+    <span class="layer-badge">⚠️ Layer 5 · Risk Management</span>
+    <span class="layer-title">Historical failures &amp; persistent risks</span>
+  </div>
+  <div class="category-grid">
+
+    <div class="card" data-category="historical-failures">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">📉</div>
+          <div>
+            <div class="card-title">Materialized Risks</div>
+            <div class="card-subtitle">Historical failures</div>
+          </div>
+        </div>
+        <span class="card-count">6 groups</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <div class="subcategory-label">CeFi Failures</div>
+            <ul class="item-list">
+              <li>Mt. Gox (2014)</li><li>FTX (2022)</li><li>Celsius (2022)</li><li>BlockFi (2022)</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">DeFi Exploits</div>
+            <ul class="item-list">
+              <li>The DAO (2016) — re-entrancy</li>
+              <li>Poly Network (2021) — bridge exploit ($611M)</li>
+              <li>Ronin Bridge (2022) — private key compromise ($625M)</li>
+              <li>Euler Finance (2023) — flash loan attack ($197M)</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Stablecoin Collapses</div>
+            <ul class="item-list">
+              <li>Terra/LUNA (2022) — algorithmic death spiral ($40B)</li>
+              <li>USDC temporary de-peg (2023) — SVB exposure</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Speculative Waves</div>
+            <ul class="item-list">
+              <li>ICO boom (2017–2018)</li><li>NFT bubble (2021–2022)</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Regulatory Actions</div>
+            <ul class="item-list">
+              <li>Binance (2023–2024) — DOJ charges</li>
+              <li>Tornado Cash (2022) — OFAC sanctions</li>
+            </ul>
+          </div>
+          <div class="subcategory">
+            <div class="subcategory-label">Key Takeaways</div>
+            <ul class="item-list">
+              <li>Centralized custody = counterparty risk</li>
+              <li>Bridges = largest attack surface</li>
+              <li>Algorithmic stability without collateral is fragile</li>
+              <li>Regulatory clarity is essential</li>
+              <li>"Code is law" fails with weak governance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="persistent-risks">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-title-group">
+          <div class="card-icon">⚡</div>
+          <div>
+            <div class="card-title">Persistent Risks</div>
+            <div class="card-subtitle">Recognised ongoing risks</div>
+          </div>
+        </div>
+        <span class="card-count">8 categories</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="subcategory">
+            <ul class="item-list">
+              <li>Algorithmic risks (bonding curves, AMM formulas)</li>
+              <li>Oracle manipulation (flash loans, low-liquidity pools)</li>
+              <li>Bridge &amp; interoperability risks (message spoofing)</li>
+              <li>Smart contract vulnerabilities (re-entrancy, access control)</li>
+              <li>Key management &amp; custody risks (phishing, sim-swapping)</li>
+              <li>Governance risks (token-based voting capture)</li>
+              <li>Behavioral &amp; social engineering (rug pulls, honey-pots)</li>
+              <li>Systemic contagion (stablecoin concentration, DeFi leverage)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  Data sourced from <a href="themes.yaml">themes.yaml</a> · Last revised July 2026
+</footer>
+
+<script>
+  /* ── Card toggle ── */
+  function toggleCard(header) {
+    header.closest('.card').classList.toggle('open');
+  }
+
+  /* ── Expand / Collapse all ── */
+  document.getElementById('expand-all').addEventListener('click', () => {
+    document.querySelectorAll('.card:not([data-hidden="true"])').forEach(c => c.classList.add('open'));
+  });
+  document.getElementById('collapse-all').addEventListener('click', () => {
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('open'));
+  });
+
+  /* ── Search ── */
+  const searchInput = document.getElementById('search');
+  const noResults   = document.getElementById('no-results');
+
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+
+    document.querySelectorAll('.card').forEach(card => {
+      // Reset highlights
+      card.querySelectorAll('mark').forEach(m => {
+        m.outerHTML = m.textContent;
+      });
+
+      if (!query) {
+        card.removeAttribute('data-hidden');
+        card.classList.remove('open');
+        visibleCount++;
+        return;
+      }
+
+      const titleEl    = card.querySelector('.card-title');
+      const subtitleEl = card.querySelector('.card-subtitle');
+      const itemEls    = card.querySelectorAll('.item-list li');
+      const subLabels  = card.querySelectorAll('.subcategory-label');
+
+      const titleText    = (titleEl?.textContent    || '').toLowerCase();
+      const subtitleText = (subtitleEl?.textContent || '').toLowerCase();
+      const itemsText    = Array.from(itemEls).map(li => li.textContent.toLowerCase()).join(' ');
+      const labelsText   = Array.from(subLabels).map(s => s.textContent.toLowerCase()).join(' ');
+      const fullText     = titleText + ' ' + subtitleText + ' ' + itemsText + ' ' + labelsText;
+
+      if (fullText.includes(query)) {
+        card.removeAttribute('data-hidden');
+        card.classList.add('open');
+        // Highlight matches in item tags
+        itemEls.forEach(li => {
+          if (li.textContent.toLowerCase().includes(query)) {
+            li.innerHTML = li.textContent.replace(
+              new RegExp(`(${escapeRegex(query)})`, 'gi'),
+              '<mark>$1</mark>'
+            );
+          }
+        });
+        visibleCount++;
+      } else {
+        card.setAttribute('data-hidden', 'true');
+        card.classList.remove('open');
+      }
+    });
+
+    // Show/hide entire layer sections based on visible cards
+    document.querySelectorAll('.layer').forEach(layer => {
+      const hasVisible = layer.querySelectorAll('.card:not([data-hidden="true"])').length > 0;
+      layer.style.display = hasVisible ? '' : 'none';
+    });
+
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  });
+
+  function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+</script>
+
+</body>
+</html>
