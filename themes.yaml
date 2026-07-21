@@ -1,16 +1,31 @@
 # Blockchain and Digital Assets Theme Map
+# Last revision: July 21, 2026 
 
 # ============================================
 # MINIMAL SET (6 critical categories)
 # ============================================
 
-# 1. User-facing use cases
+# 1. End user workflows
 Use cases:
-  Financial:
-    - Payments
-    - Trading and derivatives
-    - Existing RWA
-    - New securities
+
+  Speculative:
+	- Trading BTC
+	- Memecoins
+	- Prediction markets
+	
+  Institutional finance (CeFi):
+    - Payments (Visa, Stripe)
+    - Exchange trading (Coinbase, Kraken)
+    - Custody and prime brokerage
+    - RWA issuance and trading (regulated venues)
+    - Derivatives (CME, regulated futures)
+	
+  Decentralised finance (DeFi):
+    - Staking (Lido, Rocket Pool)
+    - Collateralised lending (Aave, Compound)
+    - Exchange/AMM (Uniswap, Curve)
+    - Derivatives (dYdX, GMX, perpetuals)
+    - RWA protocols (MakerDAO, Centrifuge)
 
   Physical:
     - Wireless networks (Helium)
@@ -19,116 +34,208 @@ Use cases:
     - Supply chain and provenance
 
   Social and governance:
-    - Voting rights and DAOs
     - Identity
     - Reputation and credentials
+    - Voting rights, DAOs
 
   Entertainment:
     - Gaming
-    - Collectibles
-    - Betting and prediction markets
+    - Collectibles   
+
+  Emerging: 
+    - New securities  
+	- New workflows
 
 # 2. On-chain activity flow
+
 Transactions:
   Create (new):
-    - Native issuance (block rewards, staking and validation)
-    - Token minting
-    - Airdrops and rewards
+   - Native issuance (block rewards, staking and validation)
+   - Token minting
+   - Airdrops and rewards
 
   Acquire (entry):
-    - At the table and P2P
-    - Fiat on-ramp (broker, ATM and card)
+   - At the table and P2P
+   - Fiat on-ramp (broker, ATM and card)
 
   Exchange (secondary):
-    - Centralised exchanges (CEX)
-    - Decentralised protocols (DEX)
-    - Aggregators and solvers
-    - Cross-chain bridges
+   - Centralised exchanges (CEX)
+   - Decentralised protocols (DEX)
+   - Aggregators 
+   - Solvers and intent-based execution
+   - Cross-chain bridges
 
 # 3. Asset types
-Assets:
-  - Native currency
-  - Fungible
-  - Non-fungible (NFTs)
-  - Semi-fungible
-  - Soulbound (non-transferable)
-  - Off-chain data (oracles and storage references)
+Assets and contract types:
+   - Native currency (BTC, ETH, SOL)
+   - Stablecoins (USDC, USDT, DAI, USDe)
+   - Other fungible tokens (ERC-20, SPL)
+   - Non-fungible tokens (NFTs)
+   - Semi-fungible tokens
+   - Soulbound tokens (non-transferable)
+   - Off-chain data (oracles, storage proofs)
 
 # 4. Economic models
 Incentives:
-  - Fee models (gas and priority fees)
-  - MEV (order flow, arbitrage and liquidations)
-  - Staking yields and rewards
-  - Tokenomics (inflation and burn)
+   - Fee models (gas and priority fees)
+   - MEV (order flow, arbitrage and liquidations)
+   - Staking yields and rewards
+   - Token supply and burn
 
 # 5. Networks
 Networks:
-  - Bitcoin (BTC)
-  - Ethereum (ETH)
-  - L2 and L3 Rollups
-  - Alternative L1s (BNB, Solana, Tron, Sui and Aptos)
-  - Private and consortium chains
+   - Bitcoin (BTC)
+   - Ethereum (ETH)
+   - L2 and L3 Rollups
+   - Alternative L1s (BNB, Solana, Tron)
+   - Private and consortium chains
 
 # 6. Core technology
 Foundations:
-  - Cryptography (hashing, digital signatures and Merkle trees)
-  - Address space and block data structures
-  - Peer-to-peer networking (node discovery and gossip protocols)
-  - Consensus mechanisms (participants, rules and guarantees)
-  - Execution environments (VMs and state transitions)
-  - API and user interface
+   - Cryptography (hashing, digital signatures and Merkle trees)
+   - Address space and block data structures
+   - Peer-to-peer networking (node discovery and gossip protocols)
+   - Consensus mechanisms (participants, rules and guarantees)
+   - Execution environments (VMs and state transitions)
+   - API and user interface
+   - Account and wallet abstraction (ERC-4337, ERC-7579, paymasters)
 
+# ============================================
+# USER ACCESS (3 categories)
+# ============================================	
+
+# 7. Access and custody
+Wallets and key management:
+   - Self-custodial wallets (MetaMask, Phantom, Trust Wallet)
+   - Smart contract wallets (Safe, Argent, Sequence)
+   - Account abstraction (ERC-4337, ERC-7579)
+   - Paymasters (gas abstraction, sponsored transactions)
+   - Hardware wallets (Ledger, Trezor)
+   - Key recovery and social recovery
+
+Institutional custody:
+   - MPC wallets (Fireblocks, ZenGo)
+   - Multi-sig custody solutions
+   - Qualified custodians (Coinbase Custody, BitGo)
+   - Prime brokerage and settlement
 
 # ============================================
 # NETWORK ENHANCEMENTS (3 categories)
-# ============================================
+# ============================================	
 
-# 7. Cross-network communication
+# 8. Cross-network communication
 Interoperability:
-  - Bridges
-  - Cross-chain messaging
-  - Light clients
+   - Bridges
+   - Cross-chain messaging
+   - Light clients
 
-# 8. External data
+# 9. External data
 Oracles and data feeds:
-  - Price feeds (Chainlink and Pyth)
-  - Randomness (VRF)
-  - Cross-chain data
-  - Real-world event data (sports, weather and elections)
-  - Data aggregation and verification
+   - Price feeds (Chainlink)
+   - Randomness
+   - Cross-chain data
+   - Real-world event data (sports, weather and elections)
+   - Data aggregation and verification
 
-# 9. Data persistence
+# 10. Data persistence
 Storage:
-  - On-chain storage (state and balances)
-  - Off-chain storage (IPFS, Arweave and Filecoin)
-  - Data availability layers (Celestia and EigenDA)
-  - Decentralized databases (Ceramic and OrbitDB)
-
+   - On-chain storage (state and balances)
+   - Off-chain storage (IPFS, Arweave and Filecoin)
+   - Data availability layers (Celestia and EigenDA)
+   - Decentralized databases (Ceramic and OrbitDB)
 
 # ============================================
 # FEATURES AND PROTECTION (3 categories)
 # ============================================
 
-# 10. User protection
-Privacy:
-  - Zero-knowledge proofs (ZK-SNARKs and ZK-STARKs)
-  - Stealth addresses
-  - Confidential transactions
-  - Private voting
-  - Encrypted metadata
+# 11. Privacy and user protection
+Privacy and user protection:
+   - Zero-knowledge proofs (ZK-SNARKs and ZK-STARKs)
+   - Stealth addresses
+   - Confidential transactions (hidden amounts)
+   - Private voting
+   - Encrypted metadata
+   - Selective disclosure (ZK-based KYC/age verification)
 
-# 11. System protection
-Security:
-  - Smart contract audits
-  - Multi-sig and custody
-  - Bug bounties
-  - Formal verification
-  - MEV protection
+# 12. System protection
+Contract security:
+   - Smart contract audits
+   - Multi-sig and custody
+   - Bug bounties
+   - Formal verification
+   - MEV protection
 
-# 12. Compliance
+# 13. Compliance
 Compliance:
-  - KYC and AML
-  - Sanctions screening
-  - Transfer restrictions
-  - Travel rule
-  - Reporting and tax
+   - KYC and AML
+   - Sanctions screening
+   - Transfer restrictions
+   - Travel rule
+   - Reporting and tax
+
+
+#======================================================
+# RISK MANAGEMENT (2 categories)
+#======================================================
+
+# 14. Materialized risks
+Historical failures:
+
+  - CeFi failures: Mt. Gox (2014), FTX (2022), Celsius (2022), BlockFi (2022)
+  - DeFi exploits:
+    - The DAO (2016) - Re-entrancy, led to Ethereum fork
+    - Poly Network (2021) - Bridge exploit ($611M)
+    - Ronin Bridge (2022) - Private key compromise ($625M)
+    - Euler Finance (2023) - Flash loan attack ($197M)
+  - Stablecoin collapses:
+    - Terra/LUNA (2022) - Algorithmic death spiral ($40B)
+    - USDC temporary de-peg (2023) - Silicon Valley Bank exposure
+  - Speculative waves:
+    - ICO boom (2017-2018) - Scams, retail losses, regulatory backlash
+    - NFT bubble (2021-2022) - Wash trading, illiquidity
+  - Regulatory actions:
+    - Binance (2023-2024) - DOJ charges, regulatory settlements
+    - Tornado Cash (2022) - OFAC sanctions on smart contracts
+  - Key takeaways:
+    - Centralized custody introduces counterparty risk
+    - Bridges remain the largest attack surface
+    - Algorithmic stability without collateral is fragile
+    - Regulatory clarity is essential for institutional adoption
+    - "Code is law" fails when governance is weak
+	
+# 15. Persistent risks
+Recognised risks:
+
+  - Algorithmic risks:
+    - Mathematical bugs in consensus, bonding curves, or AMM formulas
+    - Example: Terra/LUNA's death spiral was algorithmic, not a hack
+
+  - Oracle manipulation:
+    - Price feed manipulation via flash loans or low-liquidity pools
+    - Example: Mango Markets (2022) - exploited via manipulated oracle prices
+
+  - Bridge and interoperability risks:
+    - Cross-chain messages can be spoofed or replayed
+    - Example: Any bridge with a trusted validator set is a target
+
+  - Smart contract vulnerabilities:
+    - Re-entrancy, access control, logic bugs, upgradeability risks
+    - Example: The DAO (2016), still relevant today
+
+  - Key management and custody risks:
+    - Private key loss, theft, or compromise
+    - Social engineering, phishing, sim-swapping, insider threats
+
+  - Governance risks:
+    - Token-based voting can be captured by whales or attackers
+    - Example: Aave, Compound - governance attacks remain theoretical but persistent
+
+  - Behavioral and social engineering:
+    - Honey-pots, rug pulls, fake websites, malicious browser extensions
+    - Pump-and-dump schemes, influencer manipulation
+
+  - Systemic contagion:
+    - Concentration of stablecoin reserves in a single bank (e.g., USDC/SVB)
+    - Interconnected leverage across DeFi protocols
+	
+# Add later: regulatory approaches
