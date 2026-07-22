@@ -39,7 +39,7 @@ def build_content(root_path: Path) -> list[dict[str, Any]]:
         section_path = (src_dir / file_name).resolve()
         section_data = load_yaml(section_path)
 
-        section = dict(entry)
+        section = {k: v for k, v in entry.items() if k != "file"}
         section["content"] = section_data
         sections.append(section)
 
