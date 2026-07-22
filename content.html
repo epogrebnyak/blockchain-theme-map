@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Structure</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4efe7;
+      --bg-accent: #e8ded0;
+      --ink: #1f2937;
+      --muted: #5b6573;
+      --card: rgba(255, 252, 247, 0.92);
+      --line: #d7cbbb;
+      --shadow: 0 18px 45px rgba(55, 41, 18, 0.12);
+      --accent: #7a4e2d;
+      --accent-soft: #b4845d;
+      --chip: #fff4e7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.75), transparent 34%),
+        radial-gradient(circle at 80% 10%, rgba(202, 161, 119, 0.22), transparent 28%),
+        linear-gradient(180deg, var(--bg) 0%, #fcfaf6 100%);
+      font-family: "Georgia", "Times New Roman", serif;
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+    }
+
+    header {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font: 600 0.76rem/1.2 "Arial", sans-serif;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.05;
+      max-width: 12ch;
+    }
+
+    .subtitle {
+      margin: 0;
+      max-width: 68ch;
+      color: var(--muted);
+      font: 400 1rem/1.6 "Arial", sans-serif;
+    }
+
+    .summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.65);
+      color: var(--muted);
+      font: 600 0.88rem/1.2 "Arial", sans-serif;
+    }
+
+    main {
+      display: grid;
+      gap: 22px;
+    }
+
+    .section-card {
+      background: var(--card);
+      border: 1px solid rgba(122, 78, 45, 0.14);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(122, 78, 45, 0.12);
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.55rem;
+      line-height: 1.2;
+    }
+
+    .file-pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--accent);
+      font: 600 0.84rem/1.2 "Arial", sans-serif;
+      border: 1px solid rgba(122, 78, 45, 0.12);
+      white-space: nowrap;
+    }
+
+    .tree {
+      display: grid;
+      gap: 14px;
+    }
+
+    .tree-node {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 14px 14px 12px;
+    }
+
+    .tree-node > .node-key {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font: 700 0.92rem/1.2 "Arial", sans-serif;
+      color: var(--accent);
+    }
+
+    .meta {
+      color: var(--muted);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .children {
+      display: grid;
+      gap: 10px;
+      margin-left: 2px;
+      padding-left: 14px;
+      border-left: 2px solid rgba(122, 78, 45, 0.12);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    .scalar {
+      color: var(--ink);
+      word-break: break-word;
+    }
+
+    .empty {
+      color: var(--muted);
+      font: 400 0.95rem/1.5 "Arial", sans-serif;
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font: 400 0.88rem/1.6 "Arial", sans-serif;
+    }
+
+    footer a {
+      color: inherit;
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 22px 14px 36px; }
+      .section-card { padding: 16px; border-radius: 18px; }
+      .section-head { align-items: flex-start; }
+      h1 { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  
+
+  <div class="page">
+    <header>
+      <p class="eyebrow">YAML source</p>
+      <h1>Content structure</h1>
+      <p class="subtitle">A readable HTML view of the generated content file, including each section file, title, and nested payload.</p>
+      <div class="summary">6 sections from content.yaml</div>
+    </header>
+
+    <main>
+      
+        <article class="section-card">
+          <div class="section-head">
+            <h2>Use Cases</h2>
+            <div class="file-pill">use_cases.yaml</div>
+          </div>
+
+          
+            
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Speculative</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Spot trading (BTC, ETH, altcoins)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Memecoins</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Prediction markets</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Institutional finance</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Payments</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Exchange trading</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Custody and prime brokerage</span>
+    </li>
+          
+            <li>
+      <span class="scalar">RWA issuance</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Derivatives</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Decentralised finance (DeFi)</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Staking (Lido)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Collateralised lending (Aave, Compound)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Exchange/AMM (Uniswap, Curve)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Derivatives (dYdX, GMX, perpetuals)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">RWA protocols (MakerDAO)</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Physical</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Wireless networks (Helium)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Storage (Filecoin, Arweave)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Compute (Render, Akash)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Supply chain and provenance</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Social and governance</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Identity</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Reputation and credentials</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Voting rights (DAOs)</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Entertainment</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Gaming</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Collectibles</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    
+          
+        </article>
+      
+        <article class="section-card">
+          <div class="section-head">
+            <h2>Principal Components</h2>
+            <div class="file-pill">core.yaml</div>
+          </div>
+
+          
+            
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Transactions</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">horizontal</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Create</div>
+            <div class="children">
+      
+        <div class="tree">
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Native issuance</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">block rewards</span>
+    </li>
+          
+            <li>
+      <span class="scalar">staking</span>
+    </li>
+          
+            <li>
+      <span class="scalar">validation</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <span class="scalar">Token minting</span>
+    </section>
+          
+            <section class="tree-node">
+      <span class="scalar">Airdrops and rewards</span>
+    </section>
+          
+        </div>
+      
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Exchange</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Centralised exchanges (CEX)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Decentralised protocols (DEX)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Aggregators, solvers and intent-based execution</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Cross-chain bridges</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">On/off-ramp</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">At the table, P2P, OTC</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Provider (broker, ATM or card)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Exchanges</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Assets</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">horizontal</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Native currency (BTC, ETH, SOL)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Stablecoins (USDC, USDT, DAI, USDe)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Other fungible tokens (ERC-20)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Non-fungible tokens (NFTs)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Semi-fungible tokens</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Soulbound tokens (non-transferable)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Off-chain data (oracles, storage proofs)</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Network economics</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">horizontal</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Token supply and burn</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Staking yields and rewards</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Fee models (gas and priority fees)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">MEV (order flow, arbitrage and liquidations)</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Chains</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">horizontal</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Bitcoin (BTC)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Ethereum (ETH)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">L2 and L3 Rollups</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Alternative L1s (BNB, Solana, Tron)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Private and consortium chains</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Foundations</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">horizontal</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Cryptography (hashes, digital signatures)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Address space</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Block structures</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Peer-to-peer networking (node discovery and gossip protocols)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Consensus mechanisms (participants, rules and guarantees)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Execution environments (VMs and state transitions)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">API and user interfaces</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+      </div>
+    
+          
+        </article>
+      
+        <article class="section-card">
+          <div class="section-head">
+            <h2>Access and Custody</h2>
+            <div class="file-pill">custody.yaml</div>
+          </div>
+
+          
+            
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Wallets and key management</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">vertical</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Self-custodial wallets (MetaMask, Phantom, Trust Wallet)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Smart contract wallets (Safe, Argent, Sequence)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Account abstraction (ERC-4337, ERC-7579)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Paymasters (gas abstraction, sponsored transactions)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Hardware wallets (Ledger, Trezor)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Key recovery and social recovery</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Institutional custody</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">vertical</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">MPC wallets (Fireblocks, ZenGo)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Multi-sig custody solutions</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Qualified custodians (Coinbase Custody, BitGo)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Prime brokerage and settlement</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+      </div>
+    
+          
+        </article>
+      
+        <article class="section-card">
+          <div class="section-head">
+            <h2>Network Enhancements</h2>
+            <div class="file-pill">enhancements.yaml</div>
+          </div>
+
+          
+            
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Interoperability</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_id</div>
+            <div class="children">
+      <span class="scalar">interoperability</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">vertical</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Bridges</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Cross-chain messaging</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Light clients</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Oracles</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">vertical</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Randomness</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Price feeds and event data (sports, weather and elections)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Data aggregation and verification</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Cross-chain data</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Storage</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">vertical</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">On-chain storage (state and balances)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Off-chain storage (IPFS, Arweave and Filecoin)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Data availability layers (Celestia and EigenDA)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Decentralized databases (Ceramic and OrbitDB)</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+      </div>
+    
+          
+        </article>
+      
+        <article class="section-card">
+          <div class="section-head">
+            <h2>Protection</h2>
+            <div class="file-pill">protection.yaml</div>
+          </div>
+
+          
+            
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Privacy and protection</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">vertical</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Zero-knowledge proofs (ZK-SNARKs, ZK-STARKs)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Stealth addresses</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Confidential transactions (hidden amounts)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Private voting</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Encrypted metadata</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Selective disclosure (ZK-based KYC/age verification)</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Contract security</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">vertical</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Smart contract audits</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Multi-sig and custody</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Bug bounties</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Formal verification</span>
+    </li>
+          
+            <li>
+      <span class="scalar">MEV protection</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Compliance</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">vertical</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">KYC and AML</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Sanctions screening</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Transfer restrictions</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Travel rule</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Reporting and tax</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+      </div>
+    
+          
+        </article>
+      
+        <article class="section-card">
+          <div class="section-head">
+            <h2>Risk Management</h2>
+            <div class="file-pill">risks.yaml</div>
+          </div>
+
+          
+            
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Past incidents</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">horizontal</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <div class="tree">
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">CeFi failures</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Mt. Gox (2014)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">FTX (2022)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Celsius (2022)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">BlockFi (2022)</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">DeFi exploits</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">The DAO (2016)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Poly Network (2021)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Ronin Bridge (2022)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Euler Finance (2023)</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Stablecoin collapses</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Terra/LUNA (2022)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">USDC de-peg (2023)</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Speculative waves</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">ICO boom (2017-2018)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">NFT bubble (2021-2022)</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Regulatory actions</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Binance (2023-2024)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Tornado Cash (2022)</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+        </div>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">Risk categories</div>
+            <div class="children">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key meta">_orientation</div>
+            <div class="children">
+      <span class="scalar">table</span>
+    </div>
+          </section>
+        
+          <section class="tree-node">
+            <div class="node-key">items</div>
+            <div class="children">
+      
+        <div class="tree">
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Algorithmic risks</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Flaws in consensus, bonding curves, or AMM formulas</span>
+    </li>
+          
+            <li>
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Example</div>
+            <div class="children">
+      <span class="scalar">Terra/LUNA</span>
+    </div>
+          </section>
+        
+      </div>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Oracle manipulation</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Price feed manipulation via flash loans or low-liquidity pools</span>
+    </li>
+          
+            <li>
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Example</div>
+            <div class="children">
+      <span class="scalar">Mango Markets (2022) exploited via manipulated oracle prices</span>
+    </div>
+          </section>
+        
+      </div>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Bridge and interoperability risks</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Cross-chain messages can be spoofed or replayed</span>
+    </li>
+          
+            <li>
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Example</div>
+            <div class="children">
+      <span class="scalar">Any bridge with a trusted validator set is a target</span>
+    </div>
+          </section>
+        
+      </div>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Smart contract vulnerabilities</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Re-entrancy, access control, logic bugs, upgradeability risks</span>
+    </li>
+          
+            <li>
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Example</div>
+            <div class="children">
+      <span class="scalar">The DAO (2016)</span>
+    </div>
+          </section>
+        
+      </div>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Key management and custody risks</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Private key loss, theft, or compromise</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Social engineering, phishing, sim-swapping, insider threats</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Governance risks</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Token-based voting can be captured by whales or attackers</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Behavioral and social engineering</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Honey-pots, rug pulls, fake websites, malicious browser extensions</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Pump-and-dump schemes, influencer manipulation</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+            <section class="tree-node">
+      <div class="tree">
+        
+          <section class="tree-node">
+            <div class="node-key">Systemic contagion</div>
+            <div class="children">
+      
+        <ul>
+          
+            <li>
+      <span class="scalar">Concentration of stablecoin reserves in a single bank (e.g., USDC/SVB)</span>
+    </li>
+          
+            <li>
+      <span class="scalar">Interconnected leverage across DeFi protocols</span>
+    </li>
+          
+        </ul>
+      
+    </div>
+          </section>
+        
+      </div>
+    </section>
+          
+        </div>
+      
+    </div>
+          </section>
+        
+      </div>
+    </div>
+          </section>
+        
+      </div>
+    
+          
+        </article>
+      
+    </main>
+
+    <footer>
+      Generated from content.yaml.
+    </footer>
+  </div>
+</body>
+</html>

@@ -207,13 +207,23 @@ def build_context(data: dict[str, Any], source_text: str) -> dict[str, Any]:
     }
 
 
+def build_content_context(sections: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "sections": sections,
+        "section_count": len(sections),
+        "source_name": "content.yaml",
+    }
+
+
 def render(template_path: Path, yaml_path: Path, output_path: Path) -> None:
     source_text = yaml_path.read_text(encoding="utf-8")
     data = yaml.safe_load(source_text)
-    if not isinstance(data, dict):
-        raise ValueError("themes.yaml must parse to a mapping")
-
-    context = build_context(data, source_text)
+    if isinstance(data, dict):
+        context = build_context(data, source_text)
+    elif isinstance(data, list):
+        context = build_content_context(data)
+    else:
+        raise ValueError("Input YAML must parse to either a mapping or a list")
 
     env = Environment(
         loader=FileSystemLoader(str(template_path.parent)),
@@ -225,15 +235,23 @@ def render(template_path: Path, yaml_path: Path, output_path: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Render index.html from index.jinja2 and themes.yaml")
-    parser.add_argument("--template", default="index.jinja2", help="Path to Jinja template")
+    parser.add_argument("--template", default="auto", help="Path to Jinja template, or auto-detect from data")
     parser.add_argument("--data", default="themes.yaml", help="Path to YAML data file")
     parser.add_argument("--output", default="index.html", help="Path to output HTML file")
     args = parser.parse_args()
 
     base_dir = Path(__file__).resolve().parent
-    template_path = (base_dir / args.template).resolve()
     yaml_path = (base_dir / args.data).resolve()
     output_path = (base_dir / args.output).resolve()
+
+    source_text = yaml_path.read_text(encoding="utf-8")
+    parsed_data = yaml.safe_load(source_text)
+    if args.template == "auto":
+        template_name = "content.jinja2" if isinstance(parsed_data, list) else "index.jinja2"
+    else:
+        template_name = args.template
+
+    template_path = (base_dir / template_name).resolve()
 
     render(template_path, yaml_path, output_path)
 

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Structure</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4efe7;
+      --bg-accent: #e8ded0;
+      --ink: #1f2937;
+      --muted: #5b6573;
+      --card: rgba(255, 252, 247, 0.92);
+      --line: #d7cbbb;
+      --shadow: 0 18px 45px rgba(55, 41, 18, 0.12);
+      --accent: #7a4e2d;
+      --accent-soft: #b4845d;
+      --chip: #fff4e7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.75), transparent 34%),
+        radial-gradient(circle at 80% 10%, rgba(202, 161, 119, 0.22), transparent 28%),
+        linear-gradient(180deg, var(--bg) 0%, #fcfaf6 100%);
+      font-family: "Georgia", "Times New Roman", serif;
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+    }
+
+    header {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font: 600 0.76rem/1.2 "Arial", sans-serif;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.05;
+      max-width: 12ch;
+    }
+
+    .subtitle {
+      margin: 0;
+      max-width: 68ch;
+      color: var(--muted);
+      font: 400 1rem/1.6 "Arial", sans-serif;
+    }
+
+    .summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.65);
+      color: var(--muted);
+      font: 600 0.88rem/1.2 "Arial", sans-serif;
+    }
+
+    main {
+      display: grid;
+      gap: 22px;
+    }
+
+    .section-card {
+      background: var(--card);
+      border: 1px solid rgba(122, 78, 45, 0.14);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(122, 78, 45, 0.12);
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.55rem;
+      line-height: 1.2;
+    }
+
+    .file-pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--accent);
+      font: 600 0.84rem/1.2 "Arial", sans-serif;
+      border: 1px solid rgba(122, 78, 45, 0.12);
+      white-space: nowrap;
+    }
+
+    .tree {
+      display: grid;
+      gap: 14px;
+    }
+
+    .tree-node {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 14px 14px 12px;
+    }
+
+    .tree-node > .node-key {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font: 700 0.92rem/1.2 "Arial", sans-serif;
+      color: var(--accent);
+    }
+
+    .meta {
+      color: var(--muted);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .children {
+      display: grid;
+      gap: 10px;
+      margin-left: 2px;
+      padding-left: 14px;
+      border-left: 2px solid rgba(122, 78, 45, 0.12);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    .scalar {
+      color: var(--ink);
+      word-break: break-word;
+    }
+
+    .empty {
+      color: var(--muted);
+      font: 400 0.95rem/1.5 "Arial", sans-serif;
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font: 400 0.88rem/1.6 "Arial", sans-serif;
+    }
+
+    footer a {
+      color: inherit;
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 22px 14px 36px; }
+      .section-card { padding: 16px; border-radius: 18px; }
+      .section-head { align-items: flex-start; }
+      h1 { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  {% macro render_value(value) -%}
+    {% if value is mapping %}
+      <div class="tree">
+        {% for key, nested in value.items() %}
+          <section class="tree-node">
+            <div class="node-key{% if key.startswith('_') %} meta{% endif %}">{{ key }}</div>
+            <div class="children">{{ render_value(nested) }}</div>
+          </section>
+        {% endfor %}
+      </div>
+    {% elif value is sequence and value is not string %}
+      {% if value|length == 0 %}
+        <div class="empty">Empty list</div>
+      {% elif value[0] is mapping %}
+        <div class="tree">
+          {% for item in value %}
+            <section class="tree-node">{{ render_value(item) }}</section>
+          {% endfor %}
+        </div>
+      {% else %}
+        <ul>
+          {% for item in value %}
+            <li>{{ render_value(item) }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% else %}
+      <span class="scalar">{{ value }}</span>
+    {% endif %}
+  {%- endmacro %}
+
+  <div class="page">
+    <header>
+      <p class="eyebrow">YAML source</p>
+      <h1>Content structure</h1>
+      <p class="subtitle">A readable HTML view of the generated content file, including each section file, title, and nested payload.</p>
+      <div class="summary">{{ section_count|default(sections|length) }} sections from {{ source_name|default('content.yaml') }}</div>
+    </header>
+
+    <main>
+      {% for section in sections %}
+        <article class="section-card">
+          <div class="section-head">
+            <h2>{{ section.title }}</h2>
+            <div class="file-pill">{{ section.file }}</div>
+          </div>
+
+          {% if section.content %}
+            {{ render_value(section.content) }}
+          {% else %}
+            <div class="empty">No content available</div>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </main>
+
+    <footer>
+      Generated from {{ source_name|default('content.yaml') }}.
+    </footer>
+  </div>
+</body>
+</html>
