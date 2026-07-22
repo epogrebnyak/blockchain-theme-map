@@ -1,0 +1,209 @@
+- file: use_cases.yaml
+  title: Use Cases
+  content:
+    Speculative:
+    - Spot trading (BTC, ETH, altcoins)
+    - Memecoins
+    - Prediction markets
+    Institutional finance:
+    - Payments
+    - Exchange trading
+    - Custody and prime brokerage
+    - RWA issuance
+    - Derivatives
+    Decentralised finance (DeFi):
+    - Staking (Lido)
+    - Collateralised lending (Aave, Compound)
+    - Exchange/AMM (Uniswap, Curve)
+    - Derivatives (dYdX, GMX, perpetuals)
+    - RWA protocols (MakerDAO)
+    Physical:
+    - Wireless networks (Helium)
+    - Storage (Filecoin, Arweave)
+    - Compute (Render, Akash)
+    - Supply chain and provenance
+    Social and governance:
+    - Identity
+    - Reputation and credentials
+    - Voting rights (DAOs)
+    Entertainment:
+    - Gaming
+    - Collectibles
+- file: core.yaml
+  title: Principal Components
+  content:
+    Transactions:
+      _orientation: horizontal
+      Create:
+      - Native issuance:
+        - block rewards
+        - staking
+        - validation
+      - Token minting
+      - Airdrops and rewards
+      Exchange:
+      - Centralised exchanges (CEX)
+      - Decentralised protocols (DEX)
+      - Aggregators, solvers and intent-based execution
+      - Cross-chain bridges
+      On/off-ramp:
+      - At the table, P2P, OTC
+      - Provider (broker, ATM or card)
+      - Exchanges
+    Assets:
+      _orientation: horizontal
+      items:
+      - Native currency (BTC, ETH, SOL)
+      - Stablecoins (USDC, USDT, DAI, USDe)
+      - Other fungible tokens (ERC-20)
+      - Non-fungible tokens (NFTs)
+      - Semi-fungible tokens
+      - Soulbound tokens (non-transferable)
+      - Off-chain data (oracles, storage proofs)
+    Network economics:
+      _orientation: horizontal
+      items:
+      - Token supply and burn
+      - Staking yields and rewards
+      - Fee models (gas and priority fees)
+      - MEV (order flow, arbitrage and liquidations)
+    Chains:
+      _orientation: horizontal
+      items:
+      - Bitcoin (BTC)
+      - Ethereum (ETH)
+      - L2 and L3 Rollups
+      - Alternative L1s (BNB, Solana, Tron)
+      - Private and consortium chains
+    Foundations:
+      _orientation: horizontal
+      items:
+      - Cryptography (hashes, digital signatures)
+      - Address space
+      - Block structures
+      - Peer-to-peer networking (node discovery and gossip protocols)
+      - Consensus mechanisms (participants, rules and guarantees)
+      - Execution environments (VMs and state transitions)
+      - API and user interfaces
+- file: custody.yaml
+  title: Access and Custody
+  content:
+    Wallets and key management:
+      _orientation: vertical
+      items:
+      - Self-custodial wallets (MetaMask, Phantom, Trust Wallet)
+      - Smart contract wallets (Safe, Argent, Sequence)
+      - Account abstraction (ERC-4337, ERC-7579)
+      - Paymasters (gas abstraction, sponsored transactions)
+      - Hardware wallets (Ledger, Trezor)
+      - Key recovery and social recovery
+    Institutional custody:
+      _orientation: vertical
+      items:
+      - MPC wallets (Fireblocks, ZenGo)
+      - Multi-sig custody solutions
+      - Qualified custodians (Coinbase Custody, BitGo)
+      - Prime brokerage and settlement
+- file: enhancements.yaml
+  title: Network Enhancements
+  content:
+    Interoperability:
+      _id: interoperability
+      _orientation: vertical
+      items:
+      - Bridges
+      - Cross-chain messaging
+      - Light clients
+    Oracles:
+      _orientation: vertical
+      items:
+      - Randomness
+      - Price feeds and event data (sports, weather and elections)
+      - Data aggregation and verification
+      - Cross-chain data
+    Storage:
+      _orientation: vertical
+      items:
+      - On-chain storage (state and balances)
+      - Off-chain storage (IPFS, Arweave and Filecoin)
+      - Data availability layers (Celestia and EigenDA)
+      - Decentralized databases (Ceramic and OrbitDB)
+- file: protection.yaml
+  title: Protection
+  content:
+    Privacy and protection:
+      _orientation: vertical
+      items:
+      - Zero-knowledge proofs (ZK-SNARKs, ZK-STARKs)
+      - Stealth addresses
+      - Confidential transactions (hidden amounts)
+      - Private voting
+      - Encrypted metadata
+      - Selective disclosure (ZK-based KYC/age verification)
+    Contract security:
+      _orientation: vertical
+      items:
+      - Smart contract audits
+      - Multi-sig and custody
+      - Bug bounties
+      - Formal verification
+      - MEV protection
+    Compliance:
+      _orientation: vertical
+      items:
+      - KYC and AML
+      - Sanctions screening
+      - Transfer restrictions
+      - Travel rule
+      - Reporting and tax
+- file: risks.yaml
+  title: Risk Management
+  content:
+    Past incidents:
+      _orientation: horizontal
+      items:
+      - CeFi failures:
+        - Mt. Gox (2014)
+        - FTX (2022)
+        - Celsius (2022)
+        - BlockFi (2022)
+      - DeFi exploits:
+        - The DAO (2016)
+        - Poly Network (2021)
+        - Ronin Bridge (2022)
+        - Euler Finance (2023)
+      - Stablecoin collapses:
+        - Terra/LUNA (2022)
+        - USDC de-peg (2023)
+      - Speculative waves:
+        - ICO boom (2017-2018)
+        - NFT bubble (2021-2022)
+      - Regulatory actions:
+        - Binance (2023-2024)
+        - Tornado Cash (2022)
+    Risk categories:
+      _orientation: table
+      items:
+      - Algorithmic risks:
+        - Flaws in consensus, bonding curves, or AMM formulas
+        - Example: Terra/LUNA
+      - Oracle manipulation:
+        - Price feed manipulation via flash loans or low-liquidity pools
+        - Example: Mango Markets (2022) exploited via manipulated oracle prices
+      - Bridge and interoperability risks:
+        - Cross-chain messages can be spoofed or replayed
+        - Example: Any bridge with a trusted validator set is a target
+      - Smart contract vulnerabilities:
+        - Re-entrancy, access control, logic bugs, upgradeability risks
+        - Example: The DAO (2016)
+      - Key management and custody risks:
+        - Private key loss, theft, or compromise
+        - Social engineering, phishing, sim-swapping, insider threats
+      - Governance risks:
+        - Token-based voting can be captured by whales or attackers
+      - Behavioral and social engineering:
+        - Honey-pots, rug pulls, fake websites, malicious browser extensions
+        - Pump-and-dump schemes, influencer manipulation
+      - Systemic contagion:
+        - Concentration of stablecoin reserves in a single bank (e.g., USDC/SVB)
+        - Interconnected leverage across DeFi protocols
